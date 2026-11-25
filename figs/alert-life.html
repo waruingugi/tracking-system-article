@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="figure-aspect" content="1030/450"><title>The life of an alert</title><script>(function(){var off=false;try{off=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+try{if(parent!==window&&parent.document.documentElement.dataset.motion==='off')off=true}catch(e){}
+if(/[?&]motion=off/.test(location.search))off=true;document.documentElement.dataset.motion=off?'off':'lively';})();</script><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;450;500;600&family=JetBrains+Mono:wght@400;500;600&family=Antonio:wght@300..700&display=swap"><style>:root{--paper:#eff2f1;--paper-raised:#f8faf9;--paper-sunk:#e5e9e8;--canvas:#f1f3f2;--ink:#15181b;--ink-rgb:21 24 27;--ink-soft:#363c41;--muted:#5b6368;--dim:#8e969a;--line:rgba(20,23,26,.12);--line-hi:rgba(20,23,26,.26);
+--accent:#e14a0e;--accent-text:#b33a0a;--accent-rgb:225 74 14;--accent-soft:rgba(225,74,14,.08);--on-accent:#fff;
+--sys-frontend:#0891b2;--sys-backend:#047857;--sys-database:#6d28d9;--sys-security:#be123c;--sys-bus:#b45309;--sys-external:#475569;
+--font-display:'Fraunces',Georgia,serif;--font-body:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;--font-num:'Antonio','Arial Narrow',sans-serif;
+--radius:14px;--shadow-sm:0 1px 0 rgba(20,23,26,.03),0 1px 3px rgba(20,23,26,.06);--shadow-lg:0 1px 0 rgba(20,23,26,.03),0 30px 60px -30px rgba(20,23,26,.28);
+--ease-out:cubic-bezier(.22,1,.36,1);--ease-in-out:cubic-bezier(.65,0,.35,1);--sp-snappy:linear(0,.25 6%,.68 15%,.94 24%,1.06 33%,1.08 40%,1.04 52%,.99 66%,1);color-scheme:light}
+html,body{margin:0;background:var(--paper);color:var(--ink);font:400 15px/1.5 var(--font-body);-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+.fbtn{appearance:none;display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border:1px solid var(--line-hi);border-radius:9px;background:var(--paper-raised);color:var(--ink);font:500 13px/1 var(--font-body);cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .15s var(--ease-out),background-color .2s var(--ease-out);white-space:nowrap}
+.fbtn:hover{background:#fff}.fbtn:active{transform:scale(.97)}
+.fbtn svg{width:12px;height:12px}
+.fcap{display:flex;align-items:center;gap:14px;padding:12px 18px;border-top:1px solid var(--line);background:var(--paper-raised);min-height:58px}
+.fcap .n{font:500 22px/1 var(--font-num);color:var(--accent);font-variant-numeric:tabular-nums;min-width:22px}
+.fcap .t{flex:1;min-width:0;font:400 14px/1.45 var(--font-body);color:var(--ink-soft);transition:opacity .16s var(--ease-out),filter .16s}
+.fcap .t.out{opacity:0;filter:blur(2px)}
+html[data-motion="off"] .fbtn.play{display:none}
+@media (max-width:600px){.fcap{padding:10px 14px;gap:10px}.fcap .t{font-size:13px}}
+/* Styles for SVGs drawn by tools/diagram_svg.py. Needs the tokens from components/tokens.css. */
+:root { --dg-canvas: var(--canvas); --font-diagram: 'Inter', system-ui, sans-serif; --font-diagram-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace; }
+html[data-theme="dark"] { --dg-canvas: #101317; }
+.dgwrap{overflow-x:auto;background:var(--dg-canvas);-webkit-overflow-scrolling:touch}
+.dgwrap svg{display:block;width:100%;height:auto}
+svg.dg .dg-bg{fill:var(--dg-canvas)}
+svg.dg .dg-dot{fill:rgb(var(--ink-rgb) / .2)}
+svg.dg .dg-nm{fill:var(--dg-canvas)}
+svg.dg .dg-nb{fill:var(--paper-raised);stroke:var(--ink)}
+svg.dg .f .dg-nb{stroke:var(--accent);fill:color-mix(in srgb,var(--accent) 8%,var(--paper-raised))}
+svg.dg .e .dg-nb{stroke:var(--muted);stroke-dasharray:4 3;fill:color-mix(in srgb,var(--ink) 5%,var(--paper-raised))}
+svg.dg .dg-name{font:600 14px var(--font-diagram);fill:var(--ink)}
+svg.dg .dg-sub{font:400 10.5px var(--font-diagram-mono);fill:var(--muted)}
+svg.dg .dg-tg{stroke:var(--line-hi)}
+svg.dg .dg-tt{font:500 8px var(--font-diagram-mono);letter-spacing:.14em;fill:var(--muted)}
+svg.dg .f .dg-tt{fill:var(--accent-text)}
+svg.dg .dg-c{stroke:var(--muted);stroke-width:1.2}
+svg.dg .dg-c.h{stroke:var(--accent);stroke-width:1.6}
+svg.dg .dg-c.d{stroke-dasharray:5 4}
+svg.dg .dg-mk{fill:var(--muted)}
+svg.dg .dg-mk.h{fill:var(--accent)}
+svg.dg .dg-l rect,svg.dg .dg-zm{fill:var(--dg-canvas)}
+svg.dg .dg-l text{font:500 9.5px var(--font-diagram-mono);letter-spacing:.06em;fill:var(--muted)}
+svg.dg .dg-z{stroke:var(--line-hi);fill:color-mix(in srgb,var(--ink) 3.5%,var(--dg-canvas))}
+svg.dg .dg-plate{fill:var(--paper-raised);stroke:var(--line)}
+svg.dg .dg-z.f{stroke:rgb(var(--accent-rgb) / .6)}
+svg.dg .dg-zl{font:500 9.5px var(--font-diagram-mono);letter-spacing:.14em;fill:var(--muted)}
+svg.dg .dg-zl.big{font-size:10px;fill:var(--ink-soft)}
+svg.dg .dg-zl.acc{fill:var(--accent-text)}
+svg.dg .dg-chip rect{fill:var(--paper-raised);stroke:var(--line-hi);stroke-width:1}
+svg.dg .dg-chip text{font:500 11px var(--font-diagram-mono);fill:var(--ink)}
+svg.dg .dg-chip.f rect{stroke:var(--accent);fill:color-mix(in srgb,var(--accent) 8%,var(--paper-raised))}
+svg.dg .dg-chip.k rect{stroke:var(--ink)}
+svg.dg .dg-chip.e rect{stroke:var(--muted);stroke-dasharray:4 3}
+svg.dg .dg-life{stroke:var(--line-hi)}
+svg.dg .dg-band{stroke:rgb(var(--accent-rgb) / .55)}
+svg.dg .dg-start{fill:var(--ink)}
+svg.dg .dg-hd{stroke:var(--line-hi)}
+svg.dg .dg-fld{font:400 12px var(--font-diagram-mono);fill:var(--ink-soft)}
+svg.dg .dg-ty{font:500 10px var(--font-diagram-mono);letter-spacing:.06em;fill:var(--muted)}
+svg.dg .dg-grid{stroke:var(--line)}
+svg.dg .dg-day,svg.dg .dg-row{font:500 10.5px var(--font-diagram-mono);fill:var(--muted)}
+svg.dg .dg-row{font:500 12px var(--font-diagram);fill:var(--ink-soft)}
+svg.dg .dg-gate{stroke:rgb(var(--accent-rgb) / .5)}
+svg.dg .dg-gt rect{fill:var(--paper-raised);stroke:var(--accent)}
+svg.dg .dg-gt text{font:500 9px var(--font-diagram-mono);fill:var(--accent-text)}
+svg.dg .dg-bar{fill:rgb(var(--ink-rgb) / .32)}
+svg.dg .dg-bar.c{fill:var(--accent)}
+svg.dg .dg-bar.dim{fill:rgb(var(--ink-rgb) / .12)}
+svg.dg .dg-cab{fill:var(--paper-sunk);stroke:var(--ink)}
+svg.dg .dg-handle{fill:var(--dim)}
+svg.dg .dg-note{font:italic 380 13px var(--font-display);fill:var(--muted)}
+
+.dgwrap{overflow:visible;background:var(--canvas)}
+.dgwrap svg{min-width:0!important}
+.v-n{display:none}
+@media (max-width:600px){.v-w{display:none}.v-n{display:block}}
+html.anim svg.dg [data-dg]{opacity:0;transform:translateY(8px);transition:opacity .6s var(--ease-out),transform .7s var(--ease-out);transition-delay:calc(var(--i,0)*80ms)}
+html.anim svg.dg .dg-c[pathLength]{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1s var(--ease-out);transition-delay:calc(.35s + var(--i,0)*90ms)}
+html.anim svg.dg .dg-c.d{opacity:0;transition:opacity .6s var(--ease-out) 1.2s}
+html.anim svg.dg [data-dgl],html.anim svg.dg .dg-note,html.anim svg.dg .dg-lg{opacity:0;transition:opacity .6s var(--ease-out) 1.3s}
+html.anim svg.dg.in [data-dg]{opacity:1;transform:none}
+html.anim svg.dg.in .dg-c[pathLength]{stroke-dashoffset:0}
+html.anim svg.dg.in .dg-c.d,html.anim svg.dg.in [data-dgl],html.anim svg.dg.in .dg-note,html.anim svg.dg.in .dg-lg{opacity:1}
+svg.dg .dg-lg{font:500 9px var(--font-mono);letter-spacing:.08em;fill:var(--muted)}
+svg.dg .tk{fill:var(--accent);stroke:#fff;stroke-width:2}
+svg.dg .tk.ink{fill:var(--ink)}
+svg.dg .tk-r{fill:none;stroke:var(--accent);stroke-width:1.4}
+svg.dg .flash{fill:none;stroke:var(--accent);stroke-width:2.2}
+svg.dg .pop rect{fill:var(--paper-raised);stroke:var(--accent)}
+svg.dg .pop text{font:500 9.5px var(--font-mono);letter-spacing:.04em;fill:var(--accent-text)}
+</style><!--fig-theme--><style>html[data-theme="dark"] {
+  --paper: #0d1013;
+  --paper-raised: #14181c;
+  --paper-sunk: #090b0d;
+  --canvas: #101317;
+  --ink: #ebeff1;
+  --ink-rgb: 235 239 241;
+  --ink-soft: #c3cbd1;
+  --muted: #8f999f;
+  --dim: #5f686e;
+  --line: rgb(255 255 255 / .09);
+  --line-hi: rgb(255 255 255 / .2);
+  --shadow-sm: 0 1px 0 rgb(255 255 255 / .03) inset, 0 1px 3px rgb(0 0 0 / .4);
+  --shadow-lg: 0 1px 0 rgb(255 255 255 / .04) inset, 0 30px 60px -30px rgb(0 0 0 / .8);
+  --accent: #ff6a2b;
+  --accent-text: #ff8d5e;
+  --accent-rgb: 255 106 43;
+  --plate: #07090b;
+  --plate-raised: #0e1114;
+  --sys-frontend: #22b8d8;
+  --sys-backend: #2bb98a;
+  --sys-database: #9f7aea;
+  --sys-security: #f0577a;
+  --sys-bus: #e8923a;
+  --sys-external: #8a98ab;
+  --hairline-lo: rgba(235, 239, 241, .2);
+  color-scheme: dark;
+}
+html[data-theme="dark"] .mf-credit{background:rgb(13 16 19/.8)}
+html[data-theme="dark"] .gf-code{background:var(--paper-sunk);border:1px solid var(--line)}
+</style><script>(function(){var r=document.documentElement,mq=matchMedia('(prefers-color-scheme: dark)'),pr=null;
+try{if(parent!==window)pr=parent.document.documentElement}catch(e){}
+function apply(){var t=pr&&pr.getAttribute('data-theme');var d=t==='dark'||t==='light'?t==='dark':mq.matches;var v=d?'dark':'light';
+if(r.getAttribute('data-theme')!==v)r.setAttribute('data-theme',v);
+document.querySelectorAll('svg.ax,.iso').forEach(function(s){s.setAttribute('data-theme',v)})}
+apply();document.addEventListener('DOMContentLoaded',apply);
+try{mq.addEventListener('change',apply)}catch(e){}
+if(pr)new MutationObserver(apply).observe(pr,{attributes:true,attributeFilter:['data-theme']});})();</script><!--fig-theme--></head><body>
+<div class="dgwrap"><div class="v-w"><svg class="dg w" id="dg-alert-w" viewBox="0 0 1000 380" width="1000" height="380" role="img" aria-labelledby="alert-w-title alert-w-desc" style="min-width:800px"><title id="alert-w-title">The life of an alert</title><desc id="alert-w-desc">An alert starts Active. It becomes Fired when the crossing happens, Expired when 24 hours pass, or Ended when you cancel it. Only one process can win the step to Fired.</desc><defs><pattern id="alert-w-dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle class="dg-dot" cx="9" cy="9" r="1" fill="#c3c7c6"/></pattern><marker id="alert-w-a" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-mk" points="0 0, 8 3, 0 6" fill="#5b6368"/></marker><marker id="alert-w-ah" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-mk h" points="0 0, 8 3, 0 6" fill="#e14a0e"/></marker></defs><rect class="dg-bg" width="100%" height="100%" fill="#f1f3f2"/><rect width="100%" height="100%" fill="url(#alert-w-dots)"/><path class="dg-c h" d="M63,190 L100,190" pathLength="1" fill="none" stroke="#5b6368" stroke-width="1.2" marker-end="url(#alert-w-ah)"/><path class="dg-c h" d="M280,174 L362,174 Q370,174 370,166 L370,88 Q370,80 378,80 L520,80" pathLength="1" fill="none" stroke="#5b6368" stroke-width="1.2" marker-end="url(#alert-w-ah)"/><path class="dg-c " d="M280,190 L520,190" pathLength="1" fill="none" stroke="#5b6368" stroke-width="1.2" marker-end="url(#alert-w-a)"/><path class="dg-c " d="M280,206 L362,206 Q370,206 370,214 L370,292 Q370,300 378,300 L520,300" pathLength="1" fill="none" stroke="#5b6368" stroke-width="1.2" marker-end="url(#alert-w-a)"/><g class="dg-l" data-dgl><rect x="415" y="61" width="60" height="12" rx="2" fill="#f1f3f2"/><text x="445" y="70" text-anchor="middle">CROSSING</text></g><g class="dg-l" data-dgl><rect x="412" y="171" width="66" height="12" rx="2" fill="#f1f3f2"/><text x="445" y="180" text-anchor="middle">24 H PASS</text></g><g class="dg-l" data-dgl><rect x="409" y="281" width="72" height="12" rx="2" fill="#f1f3f2"/><text x="445" y="290" text-anchor="middle">YOU CANCEL</text></g><circle class="dg-start" cx="56" cy="190" r="7" fill="#15181b" data-dg/><g class="dg-n " data-dg><rect class="dg-nm" x="100" y="158" width="180" height="64" rx="6" fill="#f1f3f2"/><rect class="dg-nb" x="100" y="158" width="180" height="64" rx="6" fill="#f8faf9" stroke="#15181b" stroke-width="1"/><rect class="dg-tg" x="230" y="165" width="42" height="12" rx="2" fill="none" stroke="#8e969a" stroke-width="0.8"/><text class="dg-tt" x="251.0" y="174" text-anchor="middle">STATE</text><text class="dg-name" x="190.0" y="188.0" text-anchor="middle">Active</text><text class="dg-sub" x="190.0" y="203.0" text-anchor="middle">watching one vehicle</text></g><g class="dg-n f" data-dg><rect class="dg-nm" x="520" y="48" width="180" height="64" rx="6" fill="#f1f3f2"/><rect class="dg-nb" x="520" y="48" width="180" height="64" rx="6" fill="#f8faf9" stroke="#15181b" stroke-width="1"/><rect class="dg-tg" x="662" y="55" width="30" height="12" rx="2" fill="none" stroke="#8e969a" stroke-width="0.8"/><text class="dg-tt" x="677.0" y="64" text-anchor="middle">END</text><text class="dg-name" x="610.0" y="78.0" text-anchor="middle">Fired</text><text class="dg-sub" x="610.0" y="93.0" text-anchor="middle">the crossing happened</text></g><g class="dg-n e" data-dg><rect class="dg-nm" x="520" y="158" width="180" height="64" rx="6" fill="#f1f3f2"/><rect class="dg-nb" x="520" y="158" width="180" height="64" rx="6" fill="#f8faf9" stroke="#15181b" stroke-width="1"/><rect class="dg-tg" x="662" y="165" width="30" height="12" rx="2" fill="none" stroke="#8e969a" stroke-width="0.8"/><text class="dg-tt" x="677.0" y="174" text-anchor="middle">END</text><text class="dg-name" x="610.0" y="188.0" text-anchor="middle">Expired</text><text class="dg-sub" x="610.0" y="203.0" text-anchor="middle">24 hours passed</text></g><g class="dg-n e" data-dg><rect class="dg-nm" x="520" y="268" width="180" height="64" rx="6" fill="#f1f3f2"/><rect class="dg-nb" x="520" y="268" width="180" height="64" rx="6" fill="#f8faf9" stroke="#15181b" stroke-width="1"/><rect class="dg-tg" x="662" y="275" width="30" height="12" rx="2" fill="none" stroke="#8e969a" stroke-width="0.8"/><text class="dg-tt" x="677.0" y="284" text-anchor="middle">END</text><text class="dg-name" x="610.0" y="298.0" text-anchor="middle">Ended</text><text class="dg-sub" x="610.0" y="313.0" text-anchor="middle">you cancelled it</text></g><text class="dg-note" x="745" y="70" text-anchor="start">Only one process can win</text><text class="dg-note" x="745" y="88" text-anchor="start">the step to Fired. A second</text><text class="dg-note" x="745" y="106" text-anchor="start">try resends the same event.</text><text class="dg-note" x="745" y="200" text-anchor="start">Nothing piles up.</text><text class="dg-note" x="745" y="218" text-anchor="start">Every alert ends</text><text class="dg-note" x="745" y="236" text-anchor="start">within a day.</text><rect x="0" y="350" width="1000" height="30" fill="#f1f3f2" class="dg-bg"/><line x1="20" y1="351" x2="980" y2="351" stroke="rgba(20,23,26,.12)"/><text class="dg-lg" x="20" y="370" style="white-space:pre">●  START        END TAG = A FINAL STATE        ORANGE = THE PATH MOST ALERTS TAKE</text></svg></div><div class="v-n"><svg class="dg n" id="dg-alert-n" viewBox="0 0 380 520" width="380" height="520" role="img" aria-labelledby="alert-n-title alert-n-desc" style="min-width:304px"><title id="alert-n-title">The life of an alert</title><desc id="alert-n-desc">An alert starts Active. It becomes Fired when the crossing happens, Expired when 24 hours pass, or Ended when you cancel it.</desc><defs><pattern id="alert-n-dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle class="dg-dot" cx="9" cy="9" r="1" fill="#c3c7c6"/></pattern><marker id="alert-n-a" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-mk" points="0 0, 8 3, 0 6" fill="#5b6368"/></marker><marker id="alert-n-ah" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon class="dg-mk h" points="0 0, 8 3, 0 6" fill="#e14a0e"/></marker></defs><rect class="dg-bg" width="100%" height="100%" fill="#f1f3f2"/><rect width="100%" height="100%" fill="url(#alert-n-dots)"/><path class="dg-c h" d="M37,68 L60,68" pathLength="1" fill="none" stroke="#5b6368" stroke-width="1.2" marker-end="url(#alert-n-ah)"/><path class="dg-c h" d="M90,96 L90,150 Q90,158 98,158 L170,158" pathLength="1" fill="none" stroke="#5b6368" stroke-width="1.2" marker-end="url(#alert-n-ah)"/><path class="dg-c " d="M90,158 L90,240 Q90,248 98,248 L170,248" pathLength="1" fill="none" stroke="#5b6368" stroke-width="1.2" marker-end="url(#alert-n-a)"/><path class="dg-c " d="M90,248 L90,330 Q90,338 98,338 L170,338" pathLength="1" fill="none" stroke="#5b6368" stroke-width="1.2" marker-end="url(#alert-n-a)"/><g class="dg-l" data-dgl><rect x="100" y="139" width="60" height="12" rx="2" fill="#f1f3f2"/><text x="130" y="148" text-anchor="middle">CROSSING</text></g><g class="dg-l" data-dgl><rect x="97" y="229" width="66" height="12" rx="2" fill="#f1f3f2"/><text x="130" y="238" text-anchor="middle">24 H PASS</text></g><g class="dg-l" data-dgl><rect x="94" y="319" width="72" height="12" rx="2" fill="#f1f3f2"/><text x="130" y="328" text-anchor="middle">YOU CANCEL</text></g><circle class="dg-start" cx="30" cy="68" r="7" fill="#15181b" data-dg/><g class="dg-n " data-dg><rect class="dg-nm" x="60" y="40" width="220" height="56" rx="6" fill="#f1f3f2"/><rect class="dg-nb" x="60" y="40" width="220" height="56" rx="6" fill="#f8faf9" stroke="#15181b" stroke-width="1"/><rect class="dg-tg" x="230" y="47" width="42" height="12" rx="2" fill="none" stroke="#8e969a" stroke-width="0.8"/><text class="dg-tt" x="251.0" y="56" text-anchor="middle">STATE</text><text class="dg-name" x="170.0" y="66.0" text-anchor="middle">Active</text><text class="dg-sub" x="170.0" y="81.0" text-anchor="middle">watching one vehicle</text></g><g class="dg-n f" data-dg><rect class="dg-nm" x="170" y="130" width="200" height="56" rx="6" fill="#f1f3f2"/><rect class="dg-nb" x="170" y="130" width="200" height="56" rx="6" fill="#f8faf9" stroke="#15181b" stroke-width="1"/><rect class="dg-tg" x="332" y="137" width="30" height="12" rx="2" fill="none" stroke="#8e969a" stroke-width="0.8"/><text class="dg-tt" x="347.0" y="146" text-anchor="middle">END</text><text class="dg-name" x="270.0" y="156.0" text-anchor="middle">Fired</text><text class="dg-sub" x="270.0" y="171.0" text-anchor="middle">the crossing happened</text></g><g class="dg-n e" data-dg><rect class="dg-nm" x="170" y="220" width="200" height="56" rx="6" fill="#f1f3f2"/><rect class="dg-nb" x="170" y="220" width="200" height="56" rx="6" fill="#f8faf9" stroke="#15181b" stroke-width="1"/><rect class="dg-tg" x="332" y="227" width="30" height="12" rx="2" fill="none" stroke="#8e969a" stroke-width="0.8"/><text class="dg-tt" x="347.0" y="236" text-anchor="middle">END</text><text class="dg-name" x="270.0" y="246.0" text-anchor="middle">Expired</text><text class="dg-sub" x="270.0" y="261.0" text-anchor="middle">24 hours passed</text></g><g class="dg-n e" data-dg><rect class="dg-nm" x="170" y="310" width="200" height="56" rx="6" fill="#f1f3f2"/><rect class="dg-nb" x="170" y="310" width="200" height="56" rx="6" fill="#f8faf9" stroke="#15181b" stroke-width="1"/><rect class="dg-tg" x="332" y="317" width="30" height="12" rx="2" fill="none" stroke="#8e969a" stroke-width="0.8"/><text class="dg-tt" x="347.0" y="326" text-anchor="middle">END</text><text class="dg-name" x="270.0" y="336.0" text-anchor="middle">Ended</text><text class="dg-sub" x="270.0" y="351.0" text-anchor="middle">you cancelled it</text></g><text class="dg-note" x="20" y="400" text-anchor="start">Only one process can win the step to Fired.</text><text class="dg-note" x="20" y="418" text-anchor="start">A second try resends the same event.</text><text class="dg-note" x="20" y="436" text-anchor="start">Every alert ends within a day.</text><rect x="0" y="490" width="380" height="30" fill="#f1f3f2" class="dg-bg"/><line x1="20" y1="491" x2="360" y2="491" stroke="rgba(20,23,26,.12)"/><text class="dg-lg" x="20" y="510" style="white-space:pre">●  START     ORANGE = THE USUAL PATH</text></svg></div></div><div class="fcap" aria-live="polite"><span class="n"></span><span class="t">Every alert is in one of four states, and it fires at most once.</span><button type="button" class="fbtn play"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.8v8.4L10 6z" fill="currentColor"/></svg><span> Play an alert</span></button></div>
+<script>
+var MOTION=function(){return document.documentElement.dataset.motion!=='off'};
+function say(el,num,text){var t=el.querySelector('.t'),n=el.querySelector('.n');
+  if(!MOTION()){t.textContent=text;n.textContent=num;return}
+  t.classList.add('out');setTimeout(function(){t.textContent=text;n.textContent=num;t.classList.remove('out')},170)}
+function onView(el,fn){if(!('IntersectionObserver' in window)){fn();return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>=.35){io.disconnect();fn()}})},{threshold:[0,.35,.6]});io.observe(el)}
+function tween(dur,step,done){var t0=null;function f(ts){if(t0===null)t0=ts;var k=Math.min(1,(ts-t0)/dur);step(k);if(k<1)requestAnimationFrame(f);else if(done)done()}requestAnimationFrame(f)}
+function easeIO(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2}
+
+document.documentElement.classList.add(MOTION()?'anim':'still');
+document.querySelectorAll('svg.dg').forEach(function(s){var k=0;s.querySelectorAll('[data-dg],.dg-c').forEach(function(e){e.style.setProperty('--i',k++%14)});
+  if(!MOTION()){s.classList.add('in');return}onView(s.parentNode,function(){s.classList.add('in')})});
+var NS='http://www.w3.org/2000/svg';
+function cur(){return matchMedia('(max-width:600px)').matches?document.querySelector('svg.dg.n'):document.querySelector('svg.dg.w')}
+function mk(p,tag,a){var e=document.createElementNS(NS,tag);for(var k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+function lenOf(pts){var L=0;for(var i=1;i<pts.length;i++)L+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return L}
+function at(pts,d){for(var i=1;i<pts.length;i++){var a=pts[i-1],b=pts[i],l=Math.hypot(b[0]-a[0],b[1]-a[1]);if(d<=l||i===pts.length-1){var k=l?Math.min(1,d/l):1;return[a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k]}d-=l}return pts[pts.length-1]}
+function travel(layer,pts,cls,speed,done){var L=lenOf(pts),r=mk(layer,'circle',{r:6,'class':'tk-r'}),c=mk(layer,'circle',{r:5.5,'class':'tk '+(cls||'')});
+  if(cls)r.style.stroke='var(--ink)';
+  tween(Math.max(450,L/(speed||240)*1000),function(k){var p=at(pts,L*easeIO(k));c.setAttribute('cx',p[0]);c.setAttribute('cy',p[1]);r.setAttribute('cx',p[0]);r.setAttribute('cy',p[1]);r.setAttribute('r',6+6*((k*2.5)%1));r.style.opacity=1-((k*2.5)%1)},function(){done&&done(c,r)});return c}
+function flash(layer,b){var h=mk(layer,'rect',{x:b[0]-4,y:b[1]-4,width:b[2]+8,height:b[3]+8,rx:11,'class':'flash'});tween(900,function(k){h.style.opacity=1-k},function(){h.remove()})}
+function wait(ms){return function(next){setTimeout(next,ms)}}
+function chain(list,my,get){var i=0;(function step(){if(my!==get())return;if(i>=list.length)return;var f=list[i++];f(step)})()}
+var cfg={"end": "One crossing, one Fired, one message. Every other alert ends within 24 hours."};
+var cap=document.querySelector('.fcap'),btn=document.querySelector('.fbtn.play'),run=0,layer=null;
+var G={w:{start:[[56,190],[100,190]],fire:[[100,190],[280,190],[280,174],[370,174],[370,80],[520,80]],active:[100,158,180,64],fired:[520,48,180,64],pop:[560,122,208,22],
+          retry:[[190,190],[280,190],[280,174],[370,174],[370,80],[506,80]]},
+       n:{start:[[30,68],[60,68]],fire:[[170,96],[90,96],[90,158],[170,158]],active:[60,40,220,56],fired:[170,130,200,56],pop:[150,191,208,22],retry:[[150,96],[90,96],[90,158],[156,158]]}};
+function play(){var my=++run,svg=cur(),g=G[svg.classList.contains('n')?'n':'w'];if(layer)layer.remove();layer=mk(svg,'g',{'aria-hidden':'true'});btn.disabled=true;var tok;
+  chain([function(n){say(cap,'1','You create an alert. It is Active, watching one vehicle.');tok=travel(layer,g.start,'',160,function(){flash(layer,g.active);n()})},wait(1100),
+    function(n){say(cap,'2','The vehicle crosses. Postgres flips Active to Fired, in one step.');tok.remove();layer.querySelector('.tk-r')&&layer.querySelector('.tk-r').remove();travel(layer,g.fire,'',260,function(c,r){r.remove();tween(500,function(k){c.style.opacity=1-k},function(){c.remove()});flash(layer,g.fired);n()})},wait(1200),
+    function(n){say(cap,'3','A late retry sees the same crossing. It finds the alert already fired.');travel(layer,g.retry,'ink',260,function(c,r){r.remove();
+      var b=g.pop,p=mk(layer,'g',{'class':'pop'});mk(p,'rect',{x:b[0],y:b[1],width:b[2],height:b[3],rx:4});var t=mk(p,'text',{x:b[0]+b[2]/2,y:b[1]+15,'text-anchor':'middle'});t.textContent='ALREADY FIRED · SAME EVENT SENT';
+      tween(350,function(k){p.style.opacity=k});tween(500,function(k){c.style.opacity=1-k});n()})},wait(1700),
+    function(n){say(cap,'',cfg.end);btn.disabled=false;btn.lastChild.textContent=' Play again';n()}],my,function(){return run})}
+btn.addEventListener('click',play);
+if(MOTION())onView(document.querySelector('.dgwrap'),function(){setTimeout(play,1500)});else say(cap,'',cfg.end);
+</script></body></html>
