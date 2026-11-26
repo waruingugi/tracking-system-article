@@ -272,6 +272,9 @@ html[data-motion="off"] .ar-rings * { transition: none !important; }
 .ar-next { list-style: none; counter-reset: nx; margin: 0; padding: 0; display: grid; gap: 0; max-width: 900px; border-top: 1px solid var(--line); }
 .ar-next li { counter-increment: nx; display: grid; grid-template-columns: 56px 1fr; column-gap: 16px; padding: 26px 0; border-bottom: 1px solid var(--line); }
 .ar-next li::before { content: counter(nx, decimal-leading-zero); grid-row: span 9; font-family: var(--font-num); font-size: 30px; line-height: 1; color: var(--accent-text); }
+.ar-next li ul { margin: 6px 0 10px; padding-left: 1.2em; list-style: disc; }
+.ar-next li li { counter-increment: none; display: list-item; padding: 2px 0; border: 0; }
+.ar-next li li::before { content: none; }
 .ar-next b { font-family: var(--font-display); font-weight: 420; font-size: 23px; color: var(--ink); line-height: 1.25; }
 .ar-next p { margin: 10px 0 0; font-size: 16.5px; line-height: 1.65; color: var(--ink-soft); max-width: 68ch; }
 
@@ -5144,7 +5147,8 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
               <span class="line" data-reveal="" style="--i:1">The hidden problem behind logistics, delivery and ride-hailing in Africa,</span>
               <span class="line" data-reveal="" style="--i:2"><em>and how we solved it.</em></span>
             </h1>
-            <p class="lead ar-note" data-reveal="" style="--i:3">This project was possible because of Claude, which sped up the testing, the iteration and the design.</p>
+            <p class="lead" data-reveal="" style="--i:3">Why so many delivery and ride-hailing apps in Africa feel a step behind, and how I rebuilt the part that causes it with proven tools, for a few cents per vehicle a month.</p>
+            <p class="ar-note" data-reveal="" style="--i:3">This project was possible because of Claude, which sped up the testing, the iteration and the design.</p>
             <dl class="meta-row" data-reveal="" style="--i:4">
               <div><dt>Read</dt><dd>About 25 min</dd></div>
               <div><dt>City</dt><dd>Cape Town</dd></div>
@@ -5164,13 +5168,13 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
 <section class="sec" id="problem">
         <div class="sec-head">
           <p class="eyebrow" data-reveal=""><b>01</b> The problem</p>
-          <h2 class="display" data-reveal="" style="--i:1">Every logistics, delivery and ride-hailing app runs on one core feature: <em>tracking.</em></h2>
+          <h2 class="display" data-reveal="" style="--i:1">Every delivery app runs on one quiet feature: <em>knowing where its riders are.</em></h2>
         </div>
         <div class="prose" data-reveal="">
-          <p>Ask anyone in Africa who uses these apps. Many of them are clunky, and they always seem a step behind. That's a big part of why they don't feel as smooth as Uber, Bolt or Lyft.</p>
-          <p>Here's a simple example. Say you live in Sea Point, Cape Town, South Africa, and you order from a restaurant in Gardens, about 5 km away.</p>
+          <p>Ask anyone in Africa who uses delivery or ride-hailing apps. Many of them feel clunky, as if they're always a step behind. That's a big part of why they don't feel as smooth as Uber, Bolt or Lyft. The reason is usually hidden in a feature you never see: tracking.</p>
+          <p>Here's a simple example. Say you live in Sea Point, Cape Town, and you order from a restaurant in Gardens, about 5 km away.</p>
           <p>If you order in the app, finding you is easy. The rider follows the pin you dropped.</p>
-          <p>Now say you phone the order in instead. The person who answers might be a support agent, a dispatcher, or someone at an ambulance call centre, and they can't see where you are. So they have to:</p>
+          <p>Now say you phone the order in instead. The person who answers might be a support agent, a dispatcher, or someone at an ambulance call centre. They can't see where you are, so they have to work it out by hand, in the three steps below.</p>
         </div>
         <figure class="frame ar-fig ar-tl-frame" data-reveal="">
           <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">a phone order, worked out by hand</span><span class="mono-label">3 steps</span></div>
@@ -5184,23 +5188,22 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
         </div>
         </figure>
         <div class="prose" data-reveal="">
-          <p>They need to do all of this before the call ends, so you know what you're paying for. It's slow, and it happens on every single call.</p>
-          <p>I don't know exactly how every company tracks its vehicles. But I've worked at a few startups and seen how people run these systems. Most setups are slow, unreliable and clunky:</p>
+          <p>They have to do all of this before the call ends, so you know what you're paying. It's slow, and it happens on every single call.</p>
+          <p>I don't know exactly how every company tracks its vehicles. But I've worked at a few startups and seen how these systems are run. Most are slow and unreliable:</p>
           <ul>
             <li>Positions show up late.</li>
             <li>Distances on the map jump around.</li>
             <li>"Nearest rider" usually means nearest in a straight line, not by road.</li>
           </ul>
           <p>This matters more now than it did a few years ago. As apps like Uber pull out of some markets, new ride-hailing apps keep launching to fill the gap. But they can't match the maps and tracking the big players have.</p>
-          <p>Those companies spent millions on this one problem. They hired some of the best engineers in the world and gave them years to solve it. A small team can't spend that kind of money, and it can't spend that long on one problem.</p>
-          <p>So most teams end up with one of two bad choices:</p>
+          <p>Those companies spent millions on this one problem. They hired some of the best engineers in the world and gave them years to solve it. A small team has neither the money nor the time, so most teams end up with one of the two bad choices below.</p>
         </div>
         <div class="ar-pair" data-reveal="">
           <article class="card ar-lean" tabindex="0"><span class="ar-tint" aria-hidden="true"><i></i></span><span class="mono-label">Bad choice 1</span><h3>Pay for a maps API.</h3><p>Every distance lookup costs money. The bill grows with every order and every rider, and it grows fastest when business is good.</p></article>
           <article class="card ar-lean" tabindex="0"><span class="ar-tint" aria-hidden="true"><i></i></span><span class="mono-label">Bad choice 2</span><h3>Use straight-line distance.</h3><p>It's free, but often wrong. A rider 800 m away across a river can be 15 minutes away by road.</p></article>
         </div>
         <div class="prose" data-reveal="">
-          <p>So I decided to take a jab at this problem. In this article, I walk you through how I did it.</p>
+          <p>Neither one is good enough. So I decided to take a jab at the problem myself. This article walks you through how I did it.</p>
         </div>
       </section>
 
@@ -5208,44 +5211,130 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
 <section class="sec" id="built">
         <div class="sec-head">
           <p class="eyebrow" data-reveal=""><b>02</b> What we built</p>
-          <h2 class="display" data-reveal="" style="--i:1">The breakthrough came from <em>the infrastructure.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">It isn't a clever new algorithm. It's proven tools, fitted together.</p>
+          <h2 class="display" data-reveal="" style="--i:1">I didn't invent a clever algorithm. <em>I fitted proven tools together.</em></h2>
         </div>
         <div class="prose" data-reveal="">
-          <p>If I had written every part in my own code, I'd have spent months on problems other people had already spent years and a lot of money solving.</p>
-          <p>So I picked proven tools instead. Each one has been tuned for years by people who think about that one job all day. Then I fitted them together.</p>
-          <p>Picture one block in the middle: the tracking system. Around it sit six tools. Each one is great at one job, and each one plugs into the middle.</p>
+          <p>If I had written every part myself, I'd have spent months on problems other people had already spent years, and a lot of money, solving.</p>
+          <p>So I picked tools that have been tuned for years by people who think about one job all day, and fitted them together.</p>
+          <p>Take a look at the picture below. The tracking system sits in the middle, and six tools sit around it. Each one is great at one job, and each one plugs into the middle.</p>
         </div>
         <figure class="frame ar-fig" data-reveal="">
-          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">six tools, one system</span><span class="mono-label">Figure 1</span></div><iframe class="ar-ifr" src="figs/hub.html" title="six tools, one system" loading="lazy" style="aspect-ratio:1030/630"></iframe></figure>
+          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">six tools, one system</span></div><iframe class="ar-ifr" src="figs/hub.html" title="six tools, one system" loading="lazy" style="aspect-ratio:1030/630"></iframe></figure>
         <div class="prose" data-reveal="">
-          <p>Building this took more DevOps knowledge than coding: knowing how each tool runs, how they talk to each other, and how to keep them alive on a server. The rule was simple: don't rebuild what a proven tool already does well.</p>
-          <p>Here's what the system does, and why each piece matters to you.</p>
+          <p>Building this took more DevOps know-how than code: knowing how each tool runs, how the tools talk to each other, and how to keep them alive on a server. The rule was simple: don't rebuild what a proven tool already does well.</p>
+          <p>Here's what you get from it. Each point has its own section further down, in this order:</p>
+          <ul>
+            <li>Phones send their positions cheaply, even on patchy 3G, and each phone can only speak for itself.</li>
+            <li>You ask "where is this rider?" and get the answer in well under a millisecond.</li>
+            <li>You ask "who's nearest to this pickup?" and get riders ranked by the road they'd actually drive, with no maps bill.</li>
+            <li>You draw an area on the map and hear, once, the moment a vehicle enters or leaves it.</li>
+            <li>Your server still hears about it, even if it was down when it happened.</li>
+            <li>You replay any trip to settle an argument.</li>
+            <li>It all runs on three small servers, for a few cents per vehicle a month.</li>
+          </ul>
+          <p>But first, the one rule the whole system rests on.</p>
+        </div>
+      </section>
 
-          <h3 class="kit-h">How positions get from the phone <em>to the system</em></h3>
-          <p class="ar-hl"><span>Phones send their positions over MQTT, a messaging protocol built for small devices on weak networks.</span></p>
+<!-- ===================== 03 THE BIG PICTURE ===================== -->
+<section class="sec" id="picture">
+        <div class="sec-head">
+          <p class="eyebrow" data-reveal=""><b>03</b> The big picture</p>
+          <h2 class="display" data-reveal="" style="--i:1">Every position is written down once, <em>then read three ways.</em></h2>
+        </div>
+        <div class="prose" data-reveal="">
+          <p>Here's the whole system on one page. Follow a ping from the phone: it goes into one log, and everything else reads from there.</p>
+        </div>
+        <figure class="frame ar-fig" data-reveal="">
+          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the whole system</span></div><iframe class="ar-ifr" src="figs/system.html" title="the whole system" loading="lazy" style="aspect-ratio:1030/640"></iframe></figure>
+        <div class="prose" data-reveal="">
+          <p>That log is the only source of truth. Three readers each build their own copy from it:</p>
+          <ol>
+            <li>the in-memory table, which answers "where is it?" and "who's nearest?",</li>
+            <li>Tile38, which watches zones and fires alerts,</li>
+            <li>ClickHouse, which keeps the history.</li>
+          </ol>
+          <p>You'll meet each of them in its own section. For now, the animation below shows why splitting them up matters. Press Replay and watch the counters: one reader falls behind, then catches up, and not a single ping is lost.</p>
+        </div>
+        <figure class="frame ar-fig" data-reveal="">
+          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">one log, three readers</span></div><iframe class="ar-ifr" src="figs/readers.html" title="one log, three readers" loading="lazy" style="aspect-ratio:1000/400"></iframe><figcaption class="ar-cap">No reader ever waits on another. Each one keeps its own place in the log.</figcaption></figure>
+        <div class="prose" data-reveal="">
+          <p>No reader ever writes into another. Say the history database crashes for 20 minutes. Live search doesn't care, because it reads the log, not the history database. When history comes back, it picks up where it stopped and catches up, with nothing missing.</p>
+          <p>The same goes for alerts. If the alert engine restarts, it replays what it missed. So a crossing that happened while it was down still fires.</p>
+          <p>The log keeps positions for 24 hours, which is plenty of time to fix whatever broke. Events, like "this alert fired", are kept for 7 days.</p>
+          <p>Next to the log sits one small database. Customers, phones, API keys, zones and alerts all live in Postgres. This data is small, it changes rarely, and it has to be exactly right. Postgres has done that job reliably for decades.</p>
+          <p>Something is missing from that list on purpose: orders. The system doesn't store orders, prices or trips. A delivery company, an ambulance service and a wildlife group all track vehicles, but their "orders" look nothing alike:</p>
+          <ul>
+            <li>A delivery has a basket and a fee.</li>
+            <li>An ambulance call has a patient and a priority.</li>
+            <li>A collared elephant has no order at all.</li>
+          </ul>
+          <p>Build in a delivery order, and the system works well for delivery companies. But the ambulance service and the elephant reserve would have to fight it every day.</p>
+          <p>So it answers one question really well: where are the vehicles, and what did they do? Your orders stay in your own system, which knows them better than any tracking system could.</p>
+          <p>The data model below shows that split. The small, exact things sit in Postgres, the trails sit in ClickHouse, and the pings flow through the log. Look for an orders table, and you won't find one.</p>
+        </div>
+        <figure class="frame ar-fig" data-reveal="">
+          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">data model · what is stored, and where</span></div><iframe class="ar-ifr" src="figs/data-model.html" title="data model · what is stored, and where" loading="lazy" style="aspect-ratio:1030/680"></iframe></figure>
+        <div class="prose" data-reveal=""><p>So the first job is getting positions in, and that starts when a rider's phone logs in.</p></div>
+      </section>
+
+<!-- ===================== 04 LOGGING IN ===================== -->
+<section class="sec" id="login">
+        <div class="sec-head">
+          <p class="eyebrow" data-reveal=""><b>04</b> Logging in</p>
+          <h2 class="display" data-reveal="" style="--i:1">A rider's phone logs in once, <em>then just sends.</em></h2>
+        </div>
+        <div class="prose" data-reveal="">
+          <p>Here's what happens when a rider starts a shift, and what each step saves.</p>
+          <p>Phones send their positions over MQTT, a messaging protocol built for small devices on weak networks.</p>
           <p>Most apps send each position as a normal web request. The phone opens a connection, sends headers, waits for a reply, then does it all again 5 seconds later. MQTT opens one connection and keeps it open, so each position is a tiny message sent down a pipe that's already there.</p>
           <p>For the rider, that means less battery drain. For you, it means positions keep arriving even on patchy 3G at the edge of town.</p>
-          <p class="ar-hl"><span>Every phone has its own login, and it can only send its own position.</span></p>
-          <p>One rider's phone can't pretend to be another rider. If a phone gets cloned or stolen, you lose that one phone, not your whole fleet.</p>
-          <p class="ar-hl"><span>The login is checked once, when the phone connects, not on every ping.</span></p>
-          <p>A rider starts a shift. The phone connects and logs in, and that's one database check. Over the next few hours, the phone sends a thousand positions.</p>
-          <p>The first one needed a check. The other 999 didn't, because the connection was already trusted.</p>
+          <p>Something has to receive those messages. Most developers build that part from three separate pieces:</p>
+          <ol>
+            <li>an MQTT broker (like Mosquitto or EMQX) to receive positions from phones,</li>
+            <li>Kafka next to it, to keep a log of positions you can replay,</li>
+            <li>a separate login service to decide which phones may connect.</li>
+          </ol>
+          <p>It works, but it's clunky, and here's why it hurts:</p>
+          <ul>
+            <li>There are three systems to install, upgrade, watch and pay for. Each has its own settings, its own logs and its own ways of failing.</li>
+            <li>Something has to copy messages from the broker into Kafka. That bridge is yet another program. When it breaks, positions pile up or quietly go missing.</li>
+            <li>When something fails, there are three places to check. At 2 a.m., three suspects is two too many.</li>
+            <li>Kafka is heavy. It was built for huge companies. It's a lot of machine and a lot of know-how for a fleet of a few thousand vehicles.</li>
+          </ul>
+          <p>I used NATS instead. It does all three jobs in one small program.</p>
+          <p>It speaks MQTT to the phones, keeps the replayable log itself (a feature called JetStream), and asks the login service about every new connection (NATS calls this the "auth callout").</p>
+          <p>That's one program, one set of logs and one place to look. NATS is also fast and light, because it was built for exactly this kind of traffic: lots of small messages, all the time.</p>
+          <p>Here's how the login goes:</p>
+          <ol>
+            <li>The phone connects over MQTT with its own username and password.</li>
+            <li>NATS asks the login service: <em>"Is this phone allowed in?"</em></li>
+            <li>The login service checks Postgres, once.</li>
+            <li>If the answer is yes, it hands back a short permission slip. The slip lets the phone publish to one channel, its own, and nothing else.</li>
+          </ol>
+          <p>The animation below plays those steps. Press Replay and keep an eye on the two counters: the database is checked once, and every ping after that is simply let through.</p>
+        </div>
+        <figure class="frame ar-fig" data-reveal="">
+          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the login, step by step</span></div><iframe class="ar-ifr" src="figs/login.html" title="the login, step by step" loading="lazy" style="aspect-ratio:1030/470"></iframe></figure>
+        <div class="prose" data-reveal="">
+          <p>From then on, every ping goes straight into the log. The database isn't touched again until the phone reconnects.</p>
+          <p>Over a shift, that adds up. A phone might send a thousand positions. The first one needed a check. The other 999 didn't, because the connection was already trusted.</p>
+          <p>The next picture puts the two approaches side by side. On a phone, the two sides sit one above the other, so "left" means the top one.</p>
+          <p>Take a look at the left side: it checks every ping, so its database counter climbs with every dot. The right side checks once, at login, and its counter stops at one.</p>
         </div>
         <figure class="frame ar-fig" data-reveal="">
           <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">1,000 pings from one phone</span></div><iframe class="ar-ifr" src="figs/pings.html" title="1,000 pings from one phone" loading="lazy" style="aspect-ratio:16/8.4"></iframe><figcaption class="ar-cap">Each dot is one ping from one phone over a shift. Checking every ping would ask the database 1,000 times. Checking once, when the phone connects, asks it once.</figcaption></figure>
         <div class="prose" data-reveal="">
-          <p>A system that checks every ping would hit its database thousands of times a second, just to ask "is this phone still allowed?" This approach asks once per connection. The database stays small, cheap and fast, and it's free for the questions that really need it.</p>
-          <p class="ar-hl"><span>Each ping is light, because it doesn't carry a login token.</span></p>
-          <p>Some setups attach a signed token (a JWT, often several hundred bytes) to every single position. This approach doesn't need to, because the connection is already trusted.</p>
-          <p>Here's what that saves:</p>
+          <p>A system that checks every ping would hit its database thousands of times a second, just to ask "is this phone still allowed?" Checking once per connection keeps the database small, cheap and fast, and free for the questions that really need it.</p>
+          <p>Checking once also makes every ping lighter. Some setups attach a signed token (a JWT, often several hundred bytes) to every single position. This system doesn't need to, because the connection is already trusted. Here's what that saves:</p>
           <ul>
             <li>A rider pings every 5 seconds over a 10-hour shift. That's about 7,200 pings a day.</li>
             <li>At about 500 extra bytes each, that's about 3.6 MB a day per rider.</li>
             <li>Over a month of shifts, that's about 100 MB per rider.</li>
             <li>Across 100 riders, that's roughly 10 GB a month.</li>
           </ul>
-          <p>The chart below adds this up over a year. The grey bar is the data that does real work: the position itself. The orange bar is the extra data a JWT on every ping would send. Our approach sends no token, so it never sends the orange bar at all. Move the riders slider to see it for your own fleet.</p>
+          <p>The chart below adds this up over a year. The grey bar is the data that does real work: the position itself. The orange bar is the extra data a token on every ping would send.</p>
+          <p>This system sends no token, so it never sends the orange bar at all. Move the riders slider to see it for your own fleet.</p>
         </div>
         <div class="ar-c03" data-reveal=""><div class="kit"><section class="cs" id="c03">
     <div class="frame">
@@ -5263,7 +5352,7 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
           <div>
             
             <p class="big"><span id="bcTotal">—</span></p>
-            <p class="label" style="margin-top:6px">Wasted on tokens in a year</p>
+            <p class="label" style="margin-top:14px">Wasted on tokens in a year</p>
             <p class="ar-bc-why">Every ping carries a 500-byte token next to an 80-byte position. That is about 100 MB wasted per rider each month.</p>
           </div>
           <div class="tabs" id="bcMode" role="group" aria-label="Bar layout">
@@ -5292,70 +5381,17 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
         <div class="prose" data-reveal="">
           <p>If your company pays for riders' data bundles, those 10 GB are money you spend every month on bytes that do nothing.</p>
           <p>If your riders pay for their own data, it's worse. Each rider loses about 100 MB of their own bundle every month, just to send tokens nobody needed. For someone earning per delivery, that's a real pinch, and it comes out of their pocket, not yours.</p>
-
-          <h3 class="kit-h">Finding <em>the right rider</em></h3>
-          <p class="ar-hl"><span>When your system asks "where is this rider?", the answer comes back in milliseconds.</span></p>
-          <p>There's no database query in the way. So the answer stays fresh and fast even when thousands of phones are pinging the servers at once.</p>
-          <p class="ar-hl"><span>When your system asks "who's nearest to this pickup?", it only looks at the area around the pickup, not at every vehicle in the city.</span></p>
-          <p>That's why it stays just as fast whether you run 100 riders or 10,000 drivers.</p>
-          <p class="ar-hl"><span>The ranking looks at which way each driver is heading.</span></p>
-          <p>Picture a courier company with a depot in Paarden Eiland. A parcel is ready to go, and two vans are nearby:</p>
-          <ul>
-            <li>Van A is 300 m away and driving back toward the depot.</li>
-            <li>Van B is 200 m away, but it has just left the depot and is heading out onto the N1, the other way.</li>
-          </ul>
-          <p>On a straight-line ranking, Van B wins because it's closer. But Van B would have to find an exit, turn around and come back. Van A is already on its way in. A good dispatcher picks Van A, and so does the system.</p>
-        </div>
-        <figure class="frame ar-fig" data-reveal="">
-          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the depot in Paarden Eiland</span>
-            
-          </div><iframe class="ar-ifr" src="figs/depot.html" title="the depot in Paarden Eiland" loading="lazy" style="aspect-ratio:16/8.4"></iframe></figure>
-        <div class="prose" data-reveal="">
-          <p class="ar-hl"><span>It can rank drivers by real road distance, and it does this on your own servers.</span></p>
-          <p>There's no per-request bill, and the driver across the river drops down the list, where they belong.</p>
-
-          <h3 class="kit-h">Knowing when a vehicle <em>arrives or leaves</em></h3>
-          <p class="ar-hl"><span>You draw an area on the map, and the system tells you the moment a vehicle enters or leaves it.</span></p>
-          <p>The area can be a circle or any shape. You don't need a script that checks positions every few seconds.</p>
-        </div>
-        <figure class="frame ar-fig" data-reveal=""><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">enter, inside, exit</span></div><iframe class="ar-ifr" src="figs/enter-exit.html" title="enter, inside, exit" loading="lazy" style="aspect-ratio:16/8.4"></iframe></figure>
-        <div class="prose" data-reveal="">
-          <p class="ar-hl"><span>Each alert fires exactly once, and here's why that matters:</span></p>
-          <ul>
-            <li>If an alert sends a one-time code to a customer, they should get one code, not three.</li>
-            <li>If it texts a car owner, three texts in a row feel like spam, or like panic.</li>
-            <li>If each message is an SMS you pay for, you'd pay three times for one event.</li>
-          </ul>
-
-          <h3 class="kit-h">How your system <em>hears about it</em></h3>
-          <p class="ar-hl"><span>When something happens, the tracking system calls your server with a signed message, called a webhook.</span></p>
-          <p>The signature lets your server check that the message really came from the tracking system. Some hacky script pretending to be the system can't fake it.</p>
-          <p class="ar-hl"><span>If your server is down, the tracking system keeps retrying for up to 10 hours.</span></p>
-          <p>Say your server crashes at 1 a.m. At 1:15 a.m., one of your customers' cars leaves its parking zone. It's being stolen.</p>
-          <p>Without retries, that alert is gone. By the time anyone notices, the car is 100 km away and already stripped for parts.</p>
-          <p>With retries, the alert keeps knocking. If your server is back within the hour, you get that alert as soon as it's up, while there's still a chance to act.</p>
-          <p class="ar-hl"><span>Every customer gets its own delivery lane.</span></p>
-          <p>One customer's slow server can never hold up another customer's alerts.</p>
-
-          <h3 class="kit-h">Replaying where <em>a vehicle has been</em></h3>
-          <p class="ar-hl"><span>Every position is stored, because most arguments in this business are about where someone was.</span></p>
-          <p>Did the rider really wait at the gate? Did the truck actually drive down that street? Did the van stop for two hours with the doors open?</p>
-          <p>Without history, those questions turn into one person's word against another's. With history, you replay the trip and look.</p>
-          <p>You can view any trip three ways: the raw points, a smoothed line, or the path snapped onto real roads.</p>
-          <p class="ar-hl"><span>One customer's data can be erased with a single command.</span></p>
-          <p>You'll need that when a customer leaves you, or asks for their data to be deleted under privacy law.</p>
-
-          <h3 class="kit-h">Cutting off a phone <em>in about a second</em></h3>
-          <p>Not every phone in your fleet will behave. Some are lost, some are stolen, and some are being used to cheat.</p>
-          <p>Plus, people are finding new ways to beat these systems all the time:</p>
+          <p>The login also decides who a phone can speak for. Every phone has its own login, and it can only send its own position. One rider's phone can't pretend to be another rider. If a phone gets cloned or stolen, you lose that one phone, not your whole fleet.</p>
+          <p>To make that stick, the system takes a vehicle's identity from the channel the broker checked, never from what's written inside the message.</p>
+          <p>Say someone hacks the rider app and writes "I am vehicle 42" inside the message. It makes no difference. The broker already knows which phone logged in on that channel, and that's the identity the system trusts.</p>
+          <p>That matters, because not every phone in your fleet will behave. Some are lost, some are stolen, and some are being used to cheat. People find new ways to beat these systems all the time:</p>
           <ul>
             <li>Fake locations. A rider installs a GPS spoofing app so their phone claims to sit right outside the busiest restaurant in town. The system keeps offering them the best orders, even though they're at home on the couch 6 km away. Honest riders lose those orders.</li>
             <li>Spam. Someone pulls the login out of the rider app and writes a script that floods your servers with thousands of fake positions a minute.</li>
             <li>Theft. A phone gets snatched halfway through a delivery, and whoever has it now has an app that can send positions into your fleet.</li>
             <li>Mix-ups. A rider leaves their phone at home and starts the shift on a second phone, or stays logged in on two devices at once.</li>
           </ul>
-          <p>Whatever the reason, you revoke that one phone. Within about a second, its connection is cut. Every time it tries to reconnect, it's refused.</p>
-          <p>Here's what that looks like. Your system sends one request:</p>
+          <p>Whatever the reason, you revoke that one phone. Behind the scenes, that's one change in Postgres, plus a kick that ends the phone's current connection. Within about a second it's cut off, and every time it tries to reconnect, it's refused. From your side, it's one request:</p>
         </div>
         <div class="ar-code" data-reveal="">
           <div class="ar-code-bar"><span class="mono-label">Request</span></div>
@@ -5371,187 +5407,26 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
   <span class="c">"mode"</span>: <span class="s">"motorcycle"</span>
 }</code></pre>
         </div>
+        <div class="prose" data-reveal="">
+          <p>The picture below shows both guards at work. On the left, four phones send pings down their own lines. One is revoked, its line is cut, and its reconnects bounce off. On the right, a phone tries to post into another phone's channel, and it's refused.</p>
+        </div>
         <figure class="frame ar-fig" data-reveal="">
           <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">four phones, one of them cheating</span></div><iframe class="ar-ifr" src="figs/guard.html" title="four phones, one of them cheating" loading="lazy" style="aspect-ratio:1030/500"></iframe><figcaption class="ar-cap">Press Replay on either side. A revoked phone is cut off and every reconnect is refused. A phone can never post into another phone's channel.</figcaption></figure>
         <div class="prose" data-reveal="">
           <p>The rest of your fleet doesn't notice a thing. And if you ever need to stop a whole customer account, all of its phones drop within seconds.</p>
-
-          <h3 class="kit-h">Room <em>to grow</em></h3>
-          <ul>
-            <li>It handles 100 vehicles just as easily as 10,000. You don't rebuild anything as you grow. You add servers.</li>
-            <li>It runs on three small servers. If one dies, the other two carry on, and no positions are lost.</li>
-          </ul>
-
-          <h3 class="kit-h">What this frees <em>your team to build</em></h3>
-          <p>Tracking is like plumbing. Every company in this space needs it, and most build it badly.</p>
-          <p>That's not because their engineers are bad. It's because tracking isn't their product. They have deadlines and limited cash, and they can rarely afford engineers who specialise in maps and real-time data.</p>
-          <p>When the plumbing just works, developers get their weeks back. They can spend them on things customers actually see, like:</p>
         </div>
-        <figure class="frame ar-fig" data-reveal="">
-          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">what your team can build</span></div><iframe class="ar-ifr" src="figs/build4.html" title="what your team can build" loading="lazy" style="aspect-ratio:16/10.4"></iframe><figcaption class="ar-cap">Four things customers actually see, each built on positions the tracking system already keeps.</figcaption></figure>
-        <div class="prose" data-reveal=""><p>That's the quick tour. Now let's open it up, starting with the one rule the whole system rests on.</p></div>
-      </section>
-
-<!-- ===================== 03 THE BIG PICTURE ===================== -->
-<section class="sec" id="picture">
-        <div class="sec-head">
-          <p class="eyebrow" data-reveal=""><b>03</b> The big picture</p>
-          <h2 class="display" data-reveal="" style="--i:1">Every position goes into <em>one log first.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">Here is the whole system on one page, then the tools, and why each one beat the obvious choice.</p>
-        </div>
-        <figure class="frame ar-fig" data-reveal="">
-          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the whole system</span><span class="mono-label">Figure 8</span></div><iframe class="ar-ifr" src="figs/system.html" title="the whole system" loading="lazy" style="aspect-ratio:1030/640"></iframe></figure>
-
-        <div class="prose" data-reveal="">
-          <h3 class="kit-h">The tools I picked, and why each one <em>beat the obvious choice</em></h3>
-
-          <h4>Why NATS instead of an MQTT broker plus Kafka</h4>
-          <p>Most developers build this part from three separate pieces:</p>
-          <ol>
-            <li>an MQTT broker (like Mosquitto or EMQX) to receive positions from phones,</li>
-            <li>Kafka next to it, to keep a log of positions you can replay,</li>
-            <li>a separate login service to decide which phones may connect.</li>
-          </ol>
-          <p>It works, but it's clunky, and here's why it hurts:</p>
-          <ul>
-            <li>There are three systems to install, upgrade, watch and pay for. Each has its own settings, its own logs and its own ways of failing.</li>
-            <li>Something has to copy messages from the broker into Kafka. That bridge is yet another program. When it breaks, positions pile up or quietly go missing.</li>
-            <li>When something fails, there are three places to check. At 2 a.m., three suspects is two too many.</li>
-            <li>Kafka is heavy. It was built for huge companies. It's a lot of machine and a lot of know-how for a fleet of a few thousand vehicles.</li>
-          </ul>
-          <p>NATS does all three jobs in one small program. It speaks MQTT to the phones, keeps the replayable log itself (a feature called JetStream), and asks the login service about every new connection (NATS calls this the "auth callout").</p>
-          <p>That's one program, one set of logs and one place to look. NATS is also very fast and light, because it was built for exactly this kind of traffic: lots of small messages, all the time.</p>
-
-          <h4>Why live positions sit in memory instead of in Redis</h4>
-          <p>The latest position of every vehicle lives in plain memory, inside each API server.</p>
-          <p>The obvious choice would be Redis, a popular database that also keeps data in memory. The catch is that Redis runs as its own server, so every search has to cross the network to Redis and back.</p>
-          <ul>
-            <li>Reading from local memory takes well under a millisecond.</li>
-            <li>A round trip across the network costs about a millisecond or more, every time, before any real work is done.</li>
-          </ul>
-          <p>The whole point of keeping data in memory is speed, and that network trip would eat most of it.</p>
-          <p>Redis would also be a second copy of the truth that has to be kept in sync. Instead, each API server rebuilds its own copy from the message log when it starts. There's one source of truth, and nothing to keep in sync.</p>
-
-          <h4>Why H3 hexagons instead of PostGIS</h4>
-          <p>PostGIS is the standard tool for maps inside a database, and it's excellent. But for live "who's nearby?" searches, it has two problems.</p>
-          <p>Every search becomes a database query. The request goes over the network, the database plans and runs the query, and the answer comes back. That takes milliseconds.</p>
-          <p>The database has to keep up with every single ping. To give correct answers, it needs the latest position of every vehicle. So it takes thousands of writes a second, all day long, just to stay current.</p>
-          <p>H3 is Uber's open-source hexagon grid. It cuts the map into hexagon-shaped cells. Working out which cell a point is in, and which cells surround it, is pure maths done in memory. It takes about a microsecond, which is a thousandth of a millisecond.</p>
-          <p>At 10,000 vehicles, that gap decides whether a search feels instant or starts to crawl.</p>
-
-          <h4>Why Tile38 instead of writing geofence code from scratch</h4>
-          <p>To build alerts from scratch, I'd need to:</p>
-          <ul>
-            <li>run a loop that checks every vehicle against every zone, over and over,</li>
-            <li>write my own "is this point inside this shape?" maths,</li>
-            <li>catch the exact moment a vehicle <em>crosses</em> an edge, not just whether it's inside right now.</li>
-          </ul>
-          <p>That last one is harder than it sounds, because GPS jitters. A phone's reported position wobbles by several metres, even when it isn't moving.</p>
-          <p>Picture a car parked right on the edge of a zone. Its dot wobbles across the line: in, out, in, out, every few seconds. Simple code fires "entered!", "left!", "entered!", "left!", and the customer gets a flood of alerts about a car that never moved.</p>
-          <p>There's an opposite problem too. Picture a thin zone, like a 50 m area at a gate, and a fast car that pings every 5 seconds. One ping lands just before the zone, and the next lands just after it. The car drove straight through, but no ping ever landed inside. A simple "is it inside?" check misses it completely.</p>
-        </div>
-        <figure class="frame ar-fig" data-reveal=""><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">jitter and skip-over</span></div><iframe class="ar-ifr" src="figs/jitter.html" title="jitter and skip-over" loading="lazy" style="aspect-ratio:16/8"></iframe></figure>
-        <div class="prose" data-reveal="">
-          <p>Tile38 is a database built for exactly this, with years of tuning behind it. It compares each new position with the last one, works out real crossings, and pushes a message the moment one happens. On top of that, each alert fires only once, so even a jittery edge can't spam anyone.</p>
-
-          <h4>Why ClickHouse stores the history instead of Elasticsearch, Postgres or Timescale</h4>
-          <p>History is billions of tiny rows, each one saying "this vehicle was here at this time." And almost every question is the same: <em>show me this vehicle between these two times.</em></p>
-          <p>Here's how the usual options cope:</p>
-          <ul>
-            <li>Elasticsearch is built for searching text, like finding every log line that mentions an error. It stores a lot of extra index data to make that fast. For billions of positions, you pay in disk and memory for search features you'll never use, and it's a heavy system to run.</li>
-            <li>Postgres stores data row by row, and every row carries about 20 to 30 bytes of bookkeeping. A position is only a few numbers, so the bookkeeping can be as big as the data itself. With billions of rows, the indexes balloon and the database gets slower as it grows.</li>
-            <li>Timescale is Postgres with time-series features added, and its compression helps a lot. But it's still Postgres underneath, so it's still heavy to run at this size.</li>
-          </ul>
-          <p>ClickHouse stores data by column instead of by row. All the latitudes sit together, and so do all the longitudes. Similar numbers stored side by side compress extremely well, so each stored position takes about 26 bytes.</p>
-          <p>ClickHouse also keeps each vehicle's rows together on disk, in time order. So "show me this rider's day" reads one small, tight block. And deleting one customer's data is cheap.</p>
-
-          <h4>Why Valhalla instead of paying for a maps API</h4>
-          <p>Valhalla is an open-source routing engine. It works out real driving routes using free OpenStreetMap data.</p>
-          <p>A paid maps API charges per "element", which is one origin-to-destination pair. Google's Route Matrix, for example, charges about $5 per 1,000 elements once you pass the first 10,000 free each month.</p>
-          <p>That sounds small until you count:</p>
-          <ul>
-            <li>You get 1,000 orders a day.</li>
-            <li>For each order, you check the road distance of 20 nearby riders.</li>
-            <li>That's 20,000 elements a day, or about 600,000 a month.</li>
-          </ul>
-          <p>That comes to roughly $2,000 to $2,500 a month for one feature. It doubles when your orders double. And that's before you refresh ETAs while riders are moving.</p>
-          <p>With Valhalla running on your own servers, the cost is the server, and it's fixed. A million lookups cost the same as ten million. Your vehicle positions also never leave your own cloud.</p>
-        </div>
-        <figure class="frame ar-fig" data-reveal="">
-          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the maps bill against a fixed server</span><span class="mono-label">Figure 12</span></div><iframe class="ar-ifr" src="figs/bill.html" title="the maps bill against a fixed server" loading="lazy" style="aspect-ratio:1030/420"></iframe><figcaption class="ar-cap">Rough estimate, using the API's public tier prices and 20 riders checked per order. Point at the chart to read a value.</figcaption></figure>
-        <div class="prose" data-reveal="">
-          <h4>Why Postgres holds the accounts</h4>
-          <p>Customers, phones, API keys, zones and alerts all live in Postgres.</p>
-          <p>This data is small, it changes rarely, and it has to be exactly right. Postgres has done that job reliably for decades.</p>
-
-          <h3 class="kit-h">Why nothing gets lost: <em>one log, three readers</em></h3>
-          <p>Every position goes into one log first. The log is the only source of truth.</p>
-          <p>Three readers each build their own copy from it:</p>
-          <ol>
-            <li>the in-memory table, which answers "where is it?" and "who's nearest?",</li>
-            <li>Tile38, which watches zones and fires alerts,</li>
-            <li>ClickHouse, which keeps the history.</li>
-          </ol>
-        </div>
-        <figure class="frame ar-fig" data-reveal="">
-          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">one log, three readers</span><span class="mono-label">Figure 13</span></div><iframe class="ar-ifr" src="figs/readers.html" title="one log, three readers" loading="lazy" style="aspect-ratio:1000/400"></iframe><figcaption class="ar-cap">No reader ever waits on another. Each one keeps its own place in the log.</figcaption></figure>
-        <div class="prose" data-reveal="">
-          <p>No reader ever writes into another. Here's why that matters.</p>
-          <p>Say the history database crashes for 20 minutes. Live search doesn't care, because it reads the log, not the history database. When history comes back, it picks up where it stopped and catches up, with nothing missing.</p>
-          <p>The same goes for alerts. If the alert engine restarts, it replays what it missed. So a crossing that happened while it was down still fires.</p>
-          <p>The log keeps positions for 24 hours, which is plenty of time to fix whatever broke. Events, like "this alert fired", are kept for 7 days.</p>
-
-          <h3 class="kit-h">Why the system <em>doesn't store orders</em></h3>
-          <p>The system stores customers, phones, zones and alerts. It doesn't store orders, prices or trips, and that's on purpose.</p>
-          <p>A delivery company, an ambulance service and a wildlife group all track vehicles, but their "orders" look nothing alike:</p>
-          <ul>
-            <li>A delivery has a basket and a fee.</li>
-            <li>An ambulance call has a patient and a priority.</li>
-            <li>A collared elephant has no order at all.</li>
-          </ul>
-          <p>Build in a delivery order, and the system works well for delivery companies. But the ambulance service and the elephant reserve would have to fight it every day.</p>
-          <p>So it focuses on what every fleet needs, and answers one question really well: where are the vehicles, and what did they do? Your orders stay in your own system, which knows them better than any tracking system could.</p>
-        </div>
-        <figure class="frame ar-fig" data-reveal="">
-          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">data model · what is stored, and where</span><span class="mono-label">Figure 14</span></div><iframe class="ar-ifr" src="figs/data-model.html" title="data model · what is stored, and where" loading="lazy" style="aspect-ratio:1030/680"></iframe></figure>
-        <div class="prose" data-reveal=""><p>So the first job is getting positions in, and that starts when a rider's phone logs in.</p></div>
-      </section>
-
-<!-- ===================== 04 LOGGING IN ===================== -->
-<section class="sec" id="login">
-        <div class="sec-head">
-          <p class="eyebrow" data-reveal=""><b>04</b> Logging in</p>
-          <h2 class="display" data-reveal="" style="--i:1">A phone is checked once, <em>then trusted.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">Here's what happens when a rider starts a shift.</p>
-        </div>
-        <div class="prose" data-reveal="">
-          <ol>
-            <li>The phone connects over MQTT with its own username and password.</li>
-            <li>NATS asks the login service: <em>"Is this phone allowed in?"</em></li>
-            <li>The login service checks Postgres, once.</li>
-            <li>If the answer is yes, it hands back a short permission slip. The slip lets the phone publish to one channel, its own, and nothing else.</li>
-          </ol>
-        </div>
-        <figure class="frame ar-fig" data-reveal="">
-          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the login, step by step</span><span class="mono-label">Figure 15</span></div><iframe class="ar-ifr" src="figs/login.html" title="the login, step by step" loading="lazy" style="aspect-ratio:1030/470"></iframe></figure>
-        <div class="prose" data-reveal="">
-          <p>From then on, every ping goes straight into the log. The database isn't touched again until the phone reconnects.</p>
-          <p>There's one more safety rule. The system takes a vehicle's identity from the channel the broker verified, never from what's written inside the message.</p>
-          <p>Say someone hacks the rider app and writes "I am vehicle 42" inside the message. It makes no difference. The broker already knows which phone logged in on that channel, and that's the identity the system trusts.</p>
-          <p>Revoking a phone is one change in Postgres, plus a kick that ends its current connection. The next time it tries to connect, the answer is no.</p>
-        </div>
-        <div class="prose" data-reveal=""><p>Once the pings are flowing, the first question anyone asks is the simplest one: where is this driver right now?</p></div>
+        <div class="prose" data-reveal=""><p>Once the pings are flowing, the first question anyone asks is the simplest one: where is this rider right now?</p></div>
       </section>
 
 <!-- ===================== 05 WHERE IS THIS DRIVER ===================== -->
 <section class="sec" id="where">
         <div class="sec-head">
-          <p class="eyebrow" data-reveal=""><b>05</b> Where is this driver?</p>
-          <h2 class="display" data-reveal="" style="--i:1">The answer is one row, <em>read from memory.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">This is the question from the phone-call example at the start. The agent shouldn't have to search a map. They should just see where the rider is.</p>
+          <p class="eyebrow" data-reveal=""><b>05</b> Where is it?</p>
+          <h2 class="display" data-reveal="" style="--i:1">Where is this rider <em>right now?</em></h2>
         </div>
         <div class="prose" data-reveal="">
-          <p>Every API server keeps a live table in memory, with one row per vehicle. Each row holds:</p>
+          <p>Remember the phone call at the start? The agent shouldn't have to search a map. They should just see where the rider is.</p>
+          <p>To make that instant, every API server keeps a live table in memory, with one row per vehicle. Each row holds:</p>
           <ul>
             <li>where the vehicle is,</li>
             <li>which way it's facing,</li>
@@ -5559,9 +5434,17 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
             <li>when the phone recorded that position.</li>
           </ul>
           <p>Each new ping replaces that vehicle's row. So when your system asks "where is rider 42?", the server reads one row from memory. There's no database trip and no network trip, and the answer comes back in well under a millisecond.</p>
-          <p>The answer also says how old the position is, and whether the vehicle still counts as live.</p>
-          <p>Here's why that matters. A rider drives into a basement parking garage and loses signal. A simple system keeps showing their last dot as if it's fresh, and the dispatcher hands them an order they can't even see.</p>
+          <p>You might expect these positions to live in Redis, a popular database that also keeps data in memory. The catch is that Redis runs as its own server, so every question has to cross the network to Redis and back:</p>
+          <ul>
+            <li>Reading from local memory takes well under a millisecond.</li>
+            <li>A round trip across the network costs about a millisecond or more, every time, before any real work is done.</li>
+          </ul>
+          <p>The whole point of keeping data in memory is speed, and that network trip would eat most of it.</p>
+          <p>Redis would also be a second copy of the truth that has to be kept in sync. Instead, each API server rebuilds its own table from the log when it starts. There's one source of truth, and nothing to keep in sync.</p>
+          <p>The answer also says how old the position is, and whether the vehicle still counts as live. Here's why that matters.</p>
+          <p>A rider drives into a basement parking garage and loses signal. A simple system keeps showing their last dot as if it's fresh, and the dispatcher hands them an order they can't even see.</p>
           <p>The tracking system knows the last ping was, say, 3 minutes ago. After 2 minutes of silence, it marks the vehicle as not live and leaves it out of "who's nearest?" searches. The dispatcher sees the truth: <em>last seen 3 minutes ago, at the mall.</em></p>
+          <p>The picture below plays that garage moment twice. On the left, a simple system keeps showing the rider as live, and keeps them on the nearest list. On the right, the tracking system notices the silence, marks the rider as not live, and takes them off the list.</p>
         </div>
         <figure class="frame ar-fig" data-reveal=""><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">live, then silent</span></div><iframe class="ar-ifr" src="figs/live-silent.html" title="live, then silent" loading="lazy" style="aspect-ratio:16/8.4"></iframe></figure>
         <div class="prose" data-reveal="">
@@ -5574,14 +5457,17 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
         <div class="sec-head">
           <p class="eyebrow" data-reveal=""><b>06</b> Nearest rider</p>
           <h2 class="display" data-reveal="" style="--i:1">Finding the nearest rider <em>without checking every rider.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">The simple way is to measure the distance from the pickup to every vehicle, then sort the list.</p>
         </div>
         <div class="prose" data-reveal="">
+          <p>The simple way is to measure the distance from the pickup to every vehicle, then sort the list.</p>
           <p>With 50 vehicles, that's fine. With 10,000 vehicles and thousands of searches a minute, the system would spend all day measuring riders on the far side of the city.</p>
-          <p>So the map is split into H3 hexagon cells, each about 460 m along one edge. Think of each cell as a drawer. Every vehicle sits in the drawer for the spot it's in right now.</p>
+          <p>So the map is cut into hexagons using H3, Uber's open-source hexagon grid. Each cell is about 460 m along one edge. Think of each cell as a drawer. Every vehicle sits in the drawer for the spot it's in right now.</p>
           <p>To find riders near a pickup, the system opens the pickup's drawer and the rings of drawers around it, and only measures the vehicles inside them. Riders 15 km away are never even looked at.</p>
-
-          <h3 class="kit-h">How many rings of drawers <em>to open</em></h3>
+          <p>The usual tool for this is PostGIS, which handles maps inside a database, and it's excellent. But for live "who's nearby?" searches, it has two problems.</p>
+          <p>Every search becomes a database query, which goes over the network and takes milliseconds.</p>
+          <p>And to give correct answers, the database needs the latest position of every vehicle, so it takes thousands of writes a second, all day long, just to stay current.</p>
+          <p>With H3, working out which cell a point is in, and which cells surround it, is pure maths done in memory. It takes about a microsecond, which is a thousandth of a millisecond. At 10,000 vehicles, that gap decides whether a search feels instant or starts to crawl.</p>
+          <p>So how many rings of drawers should the system open? It uses this rule:</p>
         </div>
         <p class="ar-formula" data-reveal="">rings = (radius + 2 edges) ÷ 1.5 edges, <em>rounded up</em></p>
         <div class="prose" data-reveal="">
@@ -5597,21 +5483,33 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
             <li>One ring reaches 1.5 edges: 1.5 × 460 m = 690 m.</li>
             <li>1,920 ÷ 690 = 2.8, which rounds up to 3 rings.</li>
           </ul>
-          <p>Three rings reach at least 1.5 × 3 + 0.5 = 5 edges, which is about 2.3 km. That's comfortably past the 1 km the customer asked for, even with the pickup on a corner. A test checks this against a slow search that measures every single vehicle, and the fast search has never missed one.</p>
+          <p>Three rings reach at least 1.5 × 3 + 0.5 = 5 edges, which is about 2.3 km. That's comfortably past the 1 km the customer asked for, even with the pickup on a corner.</p>
+          <p>A test checks this against a slow search that measures every single vehicle, and the fast search has never missed one.</p>
+          <p>The picture below walks through that example. Press Next step to drop the pin, open the drawers ring by ring, skip the ones that are too far away, and measure only the riders that are left.</p>
         </div>
         <figure class="frame ar-fig ar-wide" data-reveal="">
           <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">opening the drawers, step by step</span></div><iframe class="ar-ifr" src="figs/rings.html" title="opening the drawers, step by step" loading="lazy" style="aspect-ratio:1030/600"></iframe><figcaption class="ar-cap">Each hexagon edge is about 460 m. The dashed circle is the 1 km the customer asked for. Press Next step.</figcaption></figure>
         <div class="prose" data-reveal="">
-          <h3 class="kit-h">Skipping drawers that are <em>clearly too far</em></h3>
-          <p>The outer ring often includes cells whose centre is well outside the search radius, so nothing in them could ever count. Skipping those cells made searches about 5× faster.</p>
-
-          <h3 class="kit-h">Which way a driver is heading <em>changes the ranking</em></h3>
-          <p>Each vehicle's distance is multiplied by a factor based on where it's heading:</p>
+          <p>That skipping step pays off. The outer ring often includes cells whose centre is well outside the search radius, so nothing in them could ever count. Skipping those cells made searches about 5× faster.</p>
+          <p>Distance isn't the only thing that counts, though. Which way a driver is heading matters too. Picture a courier company with a depot in Paarden Eiland. A parcel is ready to go, and two vans are nearby:</p>
+          <ul>
+            <li>Van A is 300 m away and driving back toward the depot.</li>
+            <li>Van B is 200 m away, but it has just left the depot and is heading out onto the N1, the other way.</li>
+          </ul>
+          <p>Take a look at the left side of the picture below. Ranked in a straight line, Van B wins because it's closer.</p>
+          <p>Now look at the right side. By road, Van B would have to find an exit, turn round and come back, while Van A is already on its way in. A good dispatcher picks Van A, and so does the system.</p>
+        </div>
+        <figure class="frame ar-fig" data-reveal="">
+          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the depot in Paarden Eiland</span>
+            
+          </div><iframe class="ar-ifr" src="figs/depot.html" title="the depot in Paarden Eiland" loading="lazy" style="aspect-ratio:16/8.4"></iframe></figure>
+        <div class="prose" data-reveal="">
+          <p>To get that right, each vehicle's distance is multiplied by a factor based on where it's heading:</p>
           <ul>
             <li>If it's driving away from the pickup, it counts as further away than it really is.</li>
             <li>If it's driving toward the pickup, it counts as closer.</li>
           </ul>
-          <p>Remember the two vans heading for the depot? Heading only changes the order of the list. Nobody is ever removed from it.</p>
+          <p>Heading only changes the order of the list. Nobody is ever removed from it.</p>
           <p>The search radius is capped at 5 km. Each search returns 10 vehicles by default, and up to 100 if you ask.</p>
           <p>All of this runs in memory, and that's exactly why Redis wouldn't help here. The whole search takes less time than a single round trip to a Redis server.</p>
         </div>
@@ -5622,33 +5520,48 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
 <section class="sec" id="road">
         <div class="sec-head">
           <p class="eyebrow" data-reveal=""><b>07</b> By road</p>
-          <h2 class="display" data-reveal="" style="--i:1">Ranking riders by the road <em>they'll actually drive.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">A rider 800 m away across the Black River is not close. To reach you, they might have to go 3 km round to the nearest bridge.</p>
+          <h2 class="display" data-reveal="" style="--i:1">Nearest in a straight line <em>isn't nearest by road.</em></h2>
         </div>
         <div class="prose" data-reveal="">
-          <p>A straight-line ranking puts that rider first, and the customer waits.</p>
-          <p>So after the hexagon search builds a shortlist, the road step asks Valhalla for the real driving distance of every vehicle on it, in one call of up to 1,000 vehicles. The answer comes back in about a quarter of a second.</p>
+          <p>A rider 800 m away across the Black River is not close. To reach you, they might have to go 3 km round to the nearest bridge.</p>
+          <p>A straight-line ranking still puts that rider first, and the customer waits.</p>
+          <p>Take a look at the left side of the picture below. Ranked in a straight line, Rider A, across the river, beats Rider B, who is on the same side as you. The right side ranks the same two riders by road. Rider A has to go round by the bridge, so Rider B moves to the top.</p>
         </div>
         <figure class="frame ar-fig" data-reveal="">
           <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the Black River</span>
             
           </div><iframe class="ar-ifr" src="figs/river.html" title="the Black River" loading="lazy" style="aspect-ratio:16/9.6"></iframe></figure>
         <div class="prose" data-reveal="">
-          <h3 class="kit-h">The shortcut <em>that didn't work</em></h3>
-          <p>The first plan tried to save work:</p>
+          <p>To rank by road, you need a routing engine. The usual answer is a paid maps API. It charges per "element", which is one origin-to-destination pair. Google's Route Matrix, for example, charges about $5 per 1,000 elements once you pass the first 10,000 free each month.</p>
+          <p>That sounds small until you count:</p>
+          <ul>
+            <li>You get 1,000 orders a day.</li>
+            <li>For each order, you check the road distance of 20 nearby riders.</li>
+            <li>That's 20,000 elements a day, or about 600,000 a month.</li>
+          </ul>
+          <p>That comes to roughly $2,000 to $2,500 a month for one feature. It doubles when your orders double. And that's before you refresh ETAs while riders are moving.</p>
+          <p>I used Valhalla instead. It's an open-source routing engine that works out real driving routes from free OpenStreetMap data.</p>
+          <p>Running on your own servers, its cost is the server, and that's fixed. A million lookups cost the same as ten million. Your vehicle positions also never leave your own cloud.</p>
+          <p>The chart below puts the two bills next to each other. As orders grow, the API bill keeps climbing, while your own server stays flat.</p>
+        </div>
+        <figure class="frame ar-fig" data-reveal="">
+          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the maps bill against a fixed server</span></div><iframe class="ar-ifr" src="figs/bill.html" title="the maps bill against a fixed server" loading="lazy" style="aspect-ratio:1030/420"></iframe><figcaption class="ar-cap">Rough estimate, using the API's public tier prices and 20 riders checked per order. Point at the chart to read a value.</figcaption></figure>
+        <div class="prose" data-reveal="">
+          <p>Here's how the road step works. After the hexagon search builds a shortlist, the system asks Valhalla for the real driving distance of every vehicle on it, in one call of up to 1,000 vehicles. The answer comes back in about a quarter of a second.</p>
+          <p>It took one wrong turn to get there. The first plan tried to save work:</p>
           <ol>
             <li>Take the closest few riders by straight line.</li>
             <li>Add a few extras as a safety margin.</li>
             <li>Ask Valhalla about them in small batches.</li>
           </ol>
-          <p>On a test, that plan found only 7 of the true top 10 riders by road.</p>
-          <p>Roads reshuffle the list too much. A rider who looks far in a straight line can be right there by road, and the other way round. A small safety margin can't catch them all.</p>
+          <p>On a test, that plan found only 7 of the true top 10 riders by road. The two lists below show the gap: on the left, the true top 10 by road, and on the right, what the shortcut found.</p>
         </div>
         <div class="ar-seven" data-reveal="" aria-label="The true top 10 by road, against the shortcut's top 10. The shortcut missed three.">
           <div><span class="mono-label">True top 10 by road</span><ol id="sevenTrue"></ol></div>
           <div><span class="mono-label">The shortcut's top 10</span><ol id="sevenShort"></ol></div>
         </div>
         <div class="prose" data-reveal="">
+          <p>Roads reshuffle the list too much. A rider who looks far in a straight line can be right there by road, and the other way round. A small safety margin can't catch them all.</p>
           <p>So now it's one big call, with two limits:</p>
           <ul>
             <li>Any route that needs a detour of more than 3× the search radius is dropped.</li>
@@ -5656,10 +5569,7 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
           </ul>
           <p>The response also tells your app whether the ranking is exact or partly estimated, so your app knows when it's being given a guess.</p>
           <p>Each vehicle has a type: motorcycle, car, pickup or van. A motorbike can take routes a van can't, and the routing knows the difference.</p>
-
-          <h3 class="kit-h">What road distance <em>still can't tell you</em></h3>
-          <p>There's no live traffic. Valhalla knows the roads and the speed limits, but not today's crash on the N2.</p>
-          <p>Road distance is a much better guess than a straight line, but it's still a guess.</p>
+          <p>Road distance still has one blind spot: there's no live traffic. Valhalla knows the roads and the speed limits, but not today's crash on the N2. So it's a much better guess than a straight line, but it's still a guess.</p>
         </div>
         <div class="prose" data-reveal=""><p>Finding vehicles is half the job. The other half is knowing when one gets somewhere, without anyone watching the map.</p></div>
       </section>
@@ -5668,44 +5578,65 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
 <section class="sec" id="alerts">
         <div class="sec-head">
           <p class="eyebrow" data-reveal=""><b>08</b> Zones and alerts</p>
-          <h2 class="display" data-reveal="" style="--i:1">Knowing the moment a vehicle <em>enters or leaves an area.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">Two words matter here: a zone, and an alert.</p>
+          <h2 class="display" data-reveal="" style="--i:1">Knowing the moment a vehicle <em>arrives or leaves.</em></h2>
+        </div>
+        <div class="prose" data-reveal="">
+          <p>You draw an area on the map, and the system tells you the moment a vehicle enters or leaves it. You don't need a script that checks positions every few seconds.</p>
+          <p>Two words matter here, a zone and an alert:</p>
         </div>
         <div class="ar-pair" data-reveal="">
           <article class="card"><span class="mono-label">A zone</span><h3>A saved shape.</h3><p>A circle, or a polygon with up to 100 corners. On its own, it does nothing. It's like a line drawn on a map.</p></article>
           <article class="card"><span class="mono-label">An alert</span><h3>What makes something happen.</h3><p>It watches one vehicle for one crossing, either entering a zone or leaving it. When that crossing happens, the alert fires once, and it's done.</p></article>
         </div>
+        <div class="prose" data-reveal="">
+          <p>Press Replay on the picture below to see one in action. A rider drives into a zone and out again. Your server gets one message on the way in, one on the way out, and nothing while the rider stays inside.</p>
+        </div>
+        <figure class="frame ar-fig" data-reveal=""><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">enter, inside, exit</span></div><iframe class="ar-ifr" src="figs/enter-exit.html" title="enter, inside, exit" loading="lazy" style="aspect-ratio:16/8.4"></iframe></figure>
+        <div class="prose" data-reveal="">
+          <p>Each alert fires exactly once, and then it's done. The picture below shows every way an alert's life can go. It starts out active. Then it fires when the crossing happens, expires after 24 hours, or ends because you cancelled it.</p>
+        </div>
         <figure class="frame ar-fig" data-reveal="">
           <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the life of an alert</span><span class="mono-label">4 states</span></div><iframe class="ar-ifr" src="figs/alert-life.html" title="the life of an alert" loading="lazy" style="aspect-ratio:1030/450"></iframe></figure>
         <div class="prose" data-reveal="">
-          <h3 class="kit-h">Four ways people <em>can use it</em></h3>
-
-          <h4 class="ar-pt-h"><span class="ar-pt">1</span>Sending a one-time code when the rider reaches the gate</h4>
-          <p>A customer in Sea Point orders dinner. You set an alert on a 100 m circle around their gate.</p>
+          <p>Firing once matters more than it sounds:</p>
+          <ul>
+            <li>If an alert sends a one-time code to a customer, they should get one code, not three.</li>
+            <li>If it texts a car owner, three texts in a row feel like spam, or like panic.</li>
+            <li>If each message is an SMS you pay for, you'd pay three times for one event.</li>
+          </ul>
+          <p>It's also harder than it sounds. Phones sometimes resend the same ping, and servers sometimes restart halfway through a job, so the same crossing can be seen twice.</p>
+          <p>When an alert fires, Postgres flips it from "active" to "fired" in one step that only one process can win. If a second attempt comes in, it finds the alert already fired and resends the same event instead of creating a new one.</p>
+          <p>Spotting the crossing in the first place is harder still, because GPS jitters. A phone's reported position wobbles by several metres, even when it isn't moving. That causes two opposite problems, and the picture below shows both.</p>
+          <p>Take a look at the left side. A car is parked right on the edge of a zone, and its dot wobbles across the line: in, out, in, out, every few seconds.</p>
+          <p>A simple "is it inside?" check fires "entered!", "left!", "entered!", "left!", and the customer gets a flood of alerts about a car that never moved.</p>
+          <p>Now look at the right side. There's a thin zone, like a 50 m strip at a gate, and a fast car that pings every 5 seconds.</p>
+          <p>One ping lands just before the zone, and the next lands just after it. The car drove straight through, but no ping ever landed inside, so the simple check misses it completely.</p>
+          <p>In both cases, the crossing check gets it right.</p>
+        </div>
+        <figure class="frame ar-fig" data-reveal=""><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">jitter and skip-over</span></div><iframe class="ar-ifr" src="figs/jitter.html" title="jitter and skip-over" loading="lazy" style="aspect-ratio:16/8"></iframe></figure>
+        <div class="prose" data-reveal="">
+          <p>Writing that crossing check yourself means a loop that checks every vehicle against every zone, over and over, your own "is this point inside this shape?" maths, and edge cases like the two above.</p>
+          <p>I used Tile38 instead. It's a database built for exactly this, with years of tuning behind it.</p>
+          <p>It compares each new position with the last one, works out real crossings, and pushes a message the moment one happens. Together with the fire-once rule, even a jittery edge can't spam anyone.</p>
+          <p>Here are four ways people can use it.</p>
+          <p>The first is a one-time code at the gate. A customer in Sea Point orders dinner, and you set an alert on a 100 m circle around their gate.</p>
           <p>When the rider enters that circle, the customer gets a one-time PIN (OTP) on their phone. They read it out at the door, and the rider types it into their app.</p>
           <p>That code proves the rider was really there and that the food reached the right person. Because the alert fires once, the customer gets one code, not three codes to choose between.</p>
-
-          <h4 class="ar-pt-h"><span class="ar-pt">2</span>Waking you up when your car leaves without you</h4>
-          <p>A small tracker sits in your car, and it's paired with your phone. You set an alert: <em>tell me if my car is more than 2 km from my phone</em> (or 500 m, if you want it tighter).</p>
+          <p>The second is waking you up when your car leaves without you. A small tracker sits in your car, and it's paired with your phone. You set an alert: <em>tell me if my car is more than 2 km from my phone</em> (or 500 m, if you want it tighter).</p>
           <p>At 3 a.m., while you're asleep, your car starts moving down the road. Your phone stays where it is.</p>
           <p>As soon as the gap passes the limit, the alert calls your webhook. Your server sends you an SMS, or even rings your phone to wake you up. You find out in minutes, not in the morning when you walk out to an empty driveway.</p>
-
-          <h4 class="ar-pt-h"><span class="ar-pt">3</span>Catching a truck that leaves the depot at night</h4>
-          <p>A transport company parks its trucks in a fenced yard in Montague Gardens. The last driver clocks out at 8 p.m., and nobody should move a truck again until 5 a.m.</p>
-          <p>Each evening, the company's own system sets one exit alert per truck on the yard's polygon, set to run until 5 a.m.</p>
-          <p>At 1:40 a.m., one truck rolls out through the gate. Its next ping is outside the polygon, so the alert fires within a second. The control room gets a webhook with the truck's plate and position, and calls the security company while the truck is still a few streets away.</p>
+          <p>The third is catching a truck that leaves the depot at night. A transport company parks its trucks in a fenced yard in Montague Gardens. The last driver clocks out at 8 p.m., and nobody should move a truck again until 5 a.m.</p>
+          <p>Each evening, the company's own system sets one exit alert per truck on the yard's shape, set to run until 5 a.m.</p>
+          <p>At 1:40 a.m., one truck rolls out through the gate. Its next ping is outside the yard, so the alert fires within a second. The control room gets a webhook with the truck's plate and position, and calls the security company while the truck is still a few streets away.</p>
           <p>The other trucks stay quiet, because nothing crossed. In the morning, the alerts that never fired just expire.</p>
-
-          <p class="ar-hl"><span>The fence can follow the real block, not a circle.</span></p>
-          <p>A zone doesn't have to be a circle. City blocks are uneven, and a circle drawn around one spills over the streets next to it.</p>
-          <p>With a circle, a van can leave the block and still count as inside for hundreds of metres. With the block's real shape, the exit alert fires the moment the van crosses the edge.</p>
+          <p>Notice that the yard's fence follows the shape of the yard, not a circle. City blocks are uneven, and a circle drawn around one spills over the streets next to it.</p>
+          <p>Take a look at the left side of the picture below: with a circle, the van leaves the block and still counts as inside for hundreds of metres. On the right, the fence follows the block's real shape, and the exit alert fires the moment the van crosses the edge.</p>
         </div>
         <figure class="frame ar-fig" data-reveal="">
           <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">a fence the shape of a block</span></div><iframe class="ar-ifr" src="figs/fence.html" title="a fence the shape of a block" loading="lazy" style="aspect-ratio:16/8.4"></iframe><figcaption class="ar-cap">The same van, the same block on the Foreshore. Only the shape of the fence changes.</figcaption></figure>
         <div class="prose" data-reveal="">
-
-          <h4 class="ar-pt-h"><span class="ar-pt">4</span>Keeping kids out of the rain while they wait for the bus</h4>
-          <p>Your child gets picked up at 6:30 a.m. But school buses are never exactly on time. Traffic, a slow child three stops earlier, or a flat tyre can shift the pickup by 15 or 20 minutes. One day the bus comes at 6:25, the next at 6:45.</p>
+          <p>The fourth is keeping kids out of the rain while they wait for the bus. Your child gets picked up at 6:30 a.m.</p>
+          <p>But school buses are never exactly on time. Traffic, a slow child three stops earlier, or a flat tyre can shift the pickup by 15 or 20 minutes. One day the bus comes at 6:25, the next at 6:45.</p>
           <p>Parents don't want their child to miss the bus, so most kids get sent out early to stand at the gate. In winter, that means standing in the dark and the cold, and sometimes in the rain, for 20 minutes or more. Younger kids end up waiting alone on the pavement.</p>
           <p>Here's how an alert fixes that:</p>
           <ol>
@@ -5713,21 +5644,15 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
             <li>Each family gets an alert on a circle of about 200 m around their gate. In a neighbourhood, that's roughly a minute away at bus speed.</li>
             <li>When the bus enters that circle, the parent's phone buzzes: <em>"The bus is about a minute away."</em></li>
           </ol>
-          <p>The child waits inside, warm and dry. When the phone buzzes, they put on their bag and walk out, and they reach the gate just as the bus pulls up.</p>
-          <p>The school benefits too. It can see which buses are running late that morning, and warn parents before they start to worry.</p>
+          <p>The child waits inside, warm and dry. When the phone buzzes, they put on their bag and walk out, and they reach the gate just as the bus pulls up. The school benefits too. It can see which buses are running late that morning, and warn parents before they start to worry.</p>
+          <p>Press Replay on the picture below to watch that morning play out. The bus heads toward the gate, and the parent gets exactly one message when it enters the 200 m circle.</p>
         </div>
         <figure class="frame ar-fig" data-reveal=""><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">the bus is a minute away</span></div><iframe class="ar-ifr" src="figs/bus.html" title="the bus is a minute away" loading="lazy" style="aspect-ratio:16/10"></iframe></figure>
         <div class="prose" data-reveal="">
-          <h3 class="kit-h">Why each alert fires <em>exactly once</em></h3>
-          <p>Phones sometimes resend the same ping, and servers sometimes restart halfway through a job. So the same crossing can be seen twice.</p>
-          <p>When an alert fires, Postgres flips it from "active" to "fired" in one step that only one process can win. If a second attempt comes in, it finds the alert already fired and resends the same event instead of creating a new one.</p>
-
-          <h3 class="kit-h">Why alerts expire <em>within 24 hours</em></h3>
-          <p>You send a rider out with an order, and you set an alert for when they reach the customer.</p>
-          <p>On the way, the rider has an accident. They never arrive, so the alert never fires. It just sits there, waiting.</p>
+          <p>There's one last rule: alerts clean up after themselves. Say you send a rider out with an order, and you set an alert for when they reach the customer. On the way, the rider has an accident. They never arrive, so the alert never fires. It just sits there, waiting.</p>
           <p>Now picture that happening a few times a week, across all your customers, for a whole year. You end up with thousands of alerts waiting for crossings that will never happen.</p>
           <p>Each one is a watcher inside Tile38, and every new ping gets checked against all of them. Bit by bit, the system slows down because of alerts nobody remembers making.</p>
-          <p>The 24-hour limit cleans them up by itself. Any alert that hasn't fired within a day expires.</p>
+          <p>So any alert that hasn't fired within 24 hours expires by itself.</p>
         </div>
         <div class="prose" data-reveal=""><p>When an alert does fire, your server needs to hear about it fast, and only once.</p></div>
       </section>
@@ -5736,33 +5661,33 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
 <section class="sec" id="webhooks">
         <div class="sec-head">
           <p class="eyebrow" data-reveal=""><b>09</b> Webhooks</p>
-          <h2 class="display" data-reveal="" style="--i:1">Getting alerts to your server, <em>even on a bad day.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">When an alert fires, an event goes into the event log. A separate program, the sender, delivers it to your server as a signed webhook.</p>
+          <h2 class="display" data-reveal="" style="--i:1">Telling your server, <em>even on a bad day.</em></h2>
         </div>
         <div class="prose" data-reveal="">
+          <p>When an alert fires, the tracking system calls your server with a signed message, called a webhook.</p>
+          <p>Here's how. The event goes into the event log, and a separate program, the sender, delivers it to your server. The signature lets your server check that the message really came from the tracking system, so some hacky script pretending to be the system can't fake one.</p>
           <p>It uses the Standard Webhooks format, so you can check signatures with a free, ready-made library in most programming languages instead of writing your own. You can also change your signing secret any time, and send yourself a test event to check that everything is wired up.</p>
-          <h3 class="kit-h">How <em>retries work</em></h3>
-          <p>If your server doesn't answer, the sender waits and tries again after:</p>
+          <p>Servers go down, though, and alerts don't wait. Say your server crashes at 1 a.m. At 1:15 a.m., one of your customers' cars leaves its parking zone. It's being stolen.</p>
+          <p>Without retries, that alert is gone. By the time anyone notices, the car is 100 km away and already stripped for parts.</p>
+          <p>So the alert keeps knocking. If your server doesn't answer, the sender waits and tries again, for up to 10 hours, after:</p>
         </div>
         <p class="ar-formula ar-formula-sm" data-reveal="">5 s → 10 s → 30 s → 1 min → 5 min → 30 min → 2 h → 5 h → <em>10 h</em></p>
         <div class="prose" data-reveal="">
-          <p>Each wait gets a small random nudge. Here's why.</p>
-          <p>Your server comes back after an outage, and a thousand events are waiting. Without the nudge, they'd all retry in the same second and knock your server straight over again. The nudge spreads them out.</p>
+          <p>If your server is back within the hour, you get that alert as soon as it's up, while there's still a chance to act.</p>
+          <p>Each wait gets a small random nudge. Here's why. Your server comes back after an outage, and a thousand events are waiting. Without the nudge, they'd all retry in the same second and knock your server straight over again. The nudge spreads them out.</p>
           <p>After 10 tries, the sender gives up on that event. If an address hasn't worked for 24 hours, it gets switched off.</p>
-
-          <h3 class="kit-h">Why every customer gets <em>its own lane</em></h3>
-          <p>Picture one shared queue for everyone's events.</p>
-          <p>Another customer's server is having a bad day. It takes 30 seconds to answer each message, and their events start blocking the queue.</p>
+          <p>Your own server isn't the only thing that can slow an alert down. Someone else's can too.</p>
+          <p>Picture one shared queue for everyone's events. Another customer's server is having a bad day. It takes 30 seconds to answer each message, and their events start blocking the queue.</p>
           <p>At that exact moment, your car is being stolen. Your theft alert sits in the queue, stuck behind theirs. By the time it reaches you, the car has left the street.</p>
+          <p>Take a look at the left side of the picture below. That's the shared queue, with your alert stuck behind the slow server. On the right, every customer gets its own lane, so your alert goes straight through.</p>
         </div>
         <figure class="frame ar-fig" data-reveal="">
           <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">one queue against one lane each</span>
             
           </div><iframe class="ar-ifr" src="figs/theft.html" title="one queue against one lane each" loading="lazy" style="aspect-ratio:16/9.4"></iframe></figure>
         <div class="prose" data-reveal="">
-          <p>With a lane per customer, that can't happen. In a test, one customer's server was set to take 30 seconds on every call. Search stayed fast, and the other customer still got their events within the same second.</p>
-          <h3 class="kit-h">Keeping webhooks <em>from being misused</em></h3>
-          <p>Webhooks only go to public internet addresses. A customer can't point one at a private address inside the tracking system's network to poke around where they shouldn't.</p>
+          <p>That's how the system works: one lane per customer. In a test, one customer's server was set to take 30 seconds on every call. Search stayed fast, and the other customer still got their events within the same second.</p>
+          <p>One more safety rule: webhooks only go to public internet addresses. A customer can't point one at a private address inside the tracking system's network to poke around where they shouldn't.</p>
         </div>
         <div class="prose" data-reveal=""><p>Alerts tell you what's happening now. When someone asks what happened last night, you need the trail.</p></div>
       </section>
@@ -5772,28 +5697,41 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
         <div class="sec-head">
           <p class="eyebrow" data-reveal=""><b>10</b> Replay</p>
           <h2 class="display" data-reveal="" style="--i:1">Replay any trip, <em>and the argument ends.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">Most disputes in this business come down to one question: where was the vehicle? Replay answers it with facts.</p>
         </div>
         <div class="prose" data-reveal="">
+          <p>Most disputes in this business come down to one question: where was the vehicle? Replay answers it with facts.</p>
           <p>Here's a common case. A customer calls in, upset. They say they waited at the gate for 10 minutes and nobody came. They never got a call, and never got a notification that the rider had arrived. Maybe the pizza went back to the shop. Maybe the rider ate it.</p>
           <p>Today, that's an argument. The rider says one thing and the customer says another, and support has to pick who to believe.</p>
-          <p>With replay, you open the rider's trail for that evening. If the rider stood outside that gate for 10 minutes, you'll see it, minute by minute. If they never got there, you'll see that too. The argument ends in a minute, with proof either way, and you can refund or push back fairly.</p>
+          <p>With replay, you open the rider's trail for that evening. If the rider stood outside that gate for 10 minutes, you'll see it, minute by minute. If they never got there, you'll see that too.</p>
+          <p>The argument ends in a minute, with proof either way, and you can refund or push back fairly.</p>
+          <p>The picture below plays that evening three ways. On the left, the rider waited at the gate. In the middle, they never came. On the right, they came late. Press Replay and watch the clock: each trail tells a different story, and the map shows which one is true.</p>
         </div>
         <figure class="frame ar-fig" data-reveal=""><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">replay settles it</span></div><iframe class="ar-ifr" src="figs/replay3.html" title="replay settles it" loading="lazy" style="aspect-ratio:16/7.6"></iframe></figure>
         <div class="prose" data-reveal="">
-          <h3 class="kit-h">Three ways <em>to view a trip</em></h3>
+          <p>You can also view any trip in three ways:</p>
         </div>
         <div class="ar-three" data-reveal="">
           <article class="card"><span class="mono-label">Raw</span><p>Exactly what the phone sent, jumps and wobbles included. Use it when you need the unedited record.</p></article>
           <article class="card"><span class="mono-label">Smooth</span><p>Cleans the GPS noise into a steady line, which is easier to read at a glance.</p></article>
           <article class="card"><span class="mono-label">Road</span><p>Snaps the trail onto real streets, with a score that says how confident the match is. Use it to see which roads the vehicle actually took.</p></article>
         </div>
+        <div class="prose" data-reveal="">
+          <p>The picture below shows one evening in all three views, side by side, from the raw pings on the left to the trail snapped onto the streets on the right.</p>
+        </div>
         <figure class="frame ar-fig" data-reveal=""><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">replay the evening</span></div><iframe class="ar-ifr" src="figs/replay.html" title="replay the evening" loading="lazy" style="aspect-ratio:16/8.6"></iframe></figure>
         <div class="prose" data-reveal="">
-          <h3 class="kit-h">How positions <em>get into history</em></h3>
+          <p>All of this history lives in ClickHouse. History is billions of tiny rows, each one saying "this vehicle was here at this time." And almost every question is the same: <em>show me this vehicle between these two times.</em></p>
+          <p>The usual options struggle with that:</p>
+          <ul>
+            <li>Elasticsearch is built for searching text, like finding every log line that mentions an error. It stores a lot of extra index data to make that fast. For billions of positions, you pay in disk and memory for search features you'll never use, and it's a heavy system to run.</li>
+            <li>Postgres stores data row by row, and every row carries about 20 to 30 bytes of bookkeeping. A position is only a few numbers, so the bookkeeping can be as big as the data itself. With billions of rows, the indexes balloon and the database gets slower as it grows.</li>
+            <li>Timescale is Postgres with time-series features added, and its compression helps a lot. But it's still Postgres underneath, so it's still heavy to run at this size.</li>
+          </ul>
+          <p>ClickHouse stores data by column instead of by row. All the latitudes sit together, and so do all the longitudes. Similar numbers stored side by side compress extremely well, so each stored position takes about 26 bytes.</p>
+          <p>ClickHouse also keeps each vehicle's rows together on disk, in time order. So "show me this rider's day" reads one small, tight block.</p>
           <p>A separate worker reads the log and writes positions into ClickHouse in batches: every 10,000 rows or every second, whichever comes first. Writing one row at a time would be far slower.</p>
           <p>Late pings are kept too. Say a rider's phone loses signal in a tunnel, then sends a backlog of positions on the other side. Those positions still land in the right place on the trail.</p>
-          <p>History is erased one customer at a time, with a single command. The command waits until the data is really gone from disk.</p>
+          <p>Deleting is cheap as well. One customer's history can be erased with a single command, which you'll need when a customer leaves you, or asks for their data to be deleted under privacy law. The command waits until the data is really gone from disk.</p>
         </div>
         <div class="prose" data-reveal=""><p>Delivery is where this started, but nothing in it is really about food.</p></div>
       </section>
@@ -5803,11 +5741,20 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
         <div class="sec-head">
           <p class="eyebrow" data-reveal=""><b>11</b> Who it's for</p>
           <h2 class="display" data-reveal="" style="--i:1">Anything that moves <em>can use it.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">This isn't only for food delivery. Any team that needs to know where moving things are, and what they did, can build on it. Here's how different teams could use it, starting with the problem each one has today. Pick a team to see what changes, or pick a tool to see who uses it.</p>
+        </div>
+        <div class="prose" data-reveal="">
+          <p>This isn't only for food delivery. Any team that needs to know where moving things are, and what they did, can build on it.</p>
+          <p>The picture below shows how different teams could use it, starting with the problem each one has today. Pick a team to see what changes, or pick a tool to see who uses it.</p>
         </div>
         <figure class="frame ar-fig" data-reveal=""><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">anything that moves</span></div><iframe class="ar-ifr" src="figs/who.html" title="anything that moves" loading="lazy" style="aspect-ratio:16/9"></iframe></figure>
-        
-        <div class="prose" data-reveal=""><p>Whichever team you're on, the next question is the same: what does it cost to run?</p></div>
+        <div class="prose" data-reveal="">
+          <p>Whichever team you're on, there's a bigger win. Tracking is like plumbing. Every company in this space needs it, and most build it badly.</p>
+          <p>That's not because their engineers are bad. It's because tracking isn't their product. They have deadlines and limited cash, and they can rarely afford engineers who specialise in maps and real-time data.</p>
+          <p>When the plumbing just works, developers get their weeks back. They can spend them on things customers actually see. The picture below shows four of them, each built on positions the system already keeps.</p>
+        </div>
+        <figure class="frame ar-fig" data-reveal="">
+          <div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">what your team can build</span></div><iframe class="ar-ifr" src="figs/build4.html" title="what your team can build" loading="lazy" style="aspect-ratio:16/10.4"></iframe><figcaption class="ar-cap">Four things customers actually see, each built on positions the tracking system already keeps.</figcaption></figure>
+        <div class="prose" data-reveal=""><p>So what does all of this cost to run?</p></div>
       </section>
 
 <!-- ===================== 12 COST ===================== -->
@@ -5815,11 +5762,12 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
         <div class="sec-head">
           <p class="eyebrow" data-reveal=""><b>12</b> What it costs</p>
           <h2 class="display" data-reveal="" style="--i:1">A large fleet pays <em>cents per vehicle.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">These are rough estimates, worked out from measured per-vehicle rates rather than a full-size load test.</p>
         </div>
         <div class="prose" data-reveal="">
+          <p>These are rough estimates, worked out from measured per-vehicle rates rather than a full-size load test.</p>
           <p class="ar-small">Prices are public list prices checked in November 2026: Google Cloud's US central region, before discounts. African cloud regions usually cost a little more.</p>
-          <p>A vehicle that pings every few seconds sends about 5,000 positions a day.</p>
+          <p>It handles 100 vehicles just as easily as 10,000. You don't rebuild anything as you grow. You add servers. And it runs on three small servers, so if one dies, the other two carry on, and no positions are lost.</p>
+          <p>A vehicle that pings every few seconds sends about 5,000 positions a day. Pick a fleet size below to see what that adds up to.</p>
         </div>
         <div class="ar-fleet-switch" data-reveal="">
           <span class="mono-label">Fleet size</span>
@@ -5874,6 +5822,9 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
           </table>
           <p class="ar-small">The Google Cloud figures include roughly $10 to $40 a month of disk.</p>
         </div>
+        <div class="prose" data-reveal="">
+          <p>To try your own fleet, use the calculator below. Change the number of vehicles, how often they ping and how long you keep history, and it works out the monthly bill.</p>
+        </div>
         <figure class="frame ar-fig" data-reveal=""><div class="frame-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="frame-title">work out your own fleet</span><span class="chip-sample">Rough estimate</span></div><iframe class="ar-ifr" src="figs/calc.html" title="work out your own fleet" loading="lazy" style="aspect-ratio:16/6.4"></iframe></figure>
         <div class="prose" data-reveal="">
           <p>A small fleet mostly pays for the minimum of three servers, which is what keeps your data safe when one dies. A large fleet pays a few cents per vehicle a month.</p>
@@ -5887,18 +5838,19 @@ html[data-motion="off"] .kit #n92 .gl { display: none; }
         <div class="sec-head">
           <p class="eyebrow" data-reveal=""><b>13</b> What's coming next</p>
           <h2 class="display" data-reveal="" style="--i:1">Seven things are <em>on the way.</em></h2>
-          <p class="lead" data-reveal="" style="--i:2">None of these are built yet. Each one comes from a real problem the current system leaves open.</p>
         </div>
+        <div class="prose" data-reveal=""><p>None of these are built yet. Each one comes from a real problem the current system leaves open.</p></div>
         <ol class="ar-next" data-reveal="">
           <li><b>An email when your server is down.</b><p>Today, a failing webhook address keeps getting retried, then gets switched off after 24 hours. You might not notice until customers complain. Next, you'll get an email as soon as failures start, while the retries are still holding your events.</p></li>
           <li><b>A webhook for alerts that never fired.</b><p>Remember the rider who crashed and never arrived? Today, that alert expires quietly. Next, you'll get a webhook when it does. A delivery alert that never fired is often a sign something went wrong on the road, and someone should check on the rider.</p></li>
           <li><b>Alerts with no time limit.</b><p>Some zones need watching forever, like the fence around a reserve. The alert should fire every time the elephant leaves, and every time it comes back, all year round. These alerts will fire on every crossing, with their own safeguards so they can't pile up.</p></li>
           <li><b>A webhook when a vehicle runs late.</b><p>Give the system a planned route and an expected arrival time. If the vehicle falls behind, you'll hear about it while there's still time to act: warn the customer, send a second rider, or call the driver.</p></li>
-          <li><b>A webhook when a vehicle goes off course.</b><p>Running late and going off course are different problems. A van can be right on time and still be somewhere it shouldn't be.</p><p>Here's how it will work. You give the system the planned route, and it draws a corridor around it, say 300 m on each side. If the vehicle leaves that corridor and stays out for more than a couple of minutes, your server gets a webhook. The short wait stops a quick detour round a roadblock from setting it off.</p><p>This catches a lot: a cash van forced off its route, a rider doing a side job in the middle of your delivery, a driver who took a wrong turn and is heading the wrong way before the customer starts calling, and a truck carrying high-value goods that stops somewhere it was never meant to be.</p></li>
-          <li><b>An alert when two moving things come close to each other.</b><p>Today, every alert watches one vehicle against a fixed zone on the map. But some of the most useful moments happen when two things that are both moving get close: a vehicle and a person, or two vehicles.</p><p>It fits ride-hailing pickups (the passenger's phone buzzes when the driver is 100 m away), rider handovers (logged the moment two riders are within 50 m), cash-in-transit escorts (an unknown tracked vehicle stays close to a cash van for too long), and tow trucks (the stranded driver hears when help is 2 minutes away). It also completes the car-tracker example: that alert fires when your car and your phone drift apart, and this one fires when two things come together.</p></li>
+          <li><b>A webhook when a vehicle goes off course.</b><p>Running late and going off course are different problems. A van can be right on time and still be somewhere it shouldn't be.</p><p>Here's how it will work. You give the system the planned route, and it draws a corridor around it, say 300 m on each side.</p><p>If the vehicle leaves that corridor and stays out for more than a couple of minutes, your server gets a webhook. The short wait stops a quick detour round a roadblock from setting it off.</p><p>This catches a lot:</p><ul><li>a cash van forced off its route,</li><li>a rider doing a side job in the middle of your delivery,</li><li>a driver who took a wrong turn and is heading the wrong way before the customer starts calling,</li><li>a truck carrying high-value goods that stops somewhere it was never meant to be.</li></ul></li>
+          <li><b>An alert when two moving things come close to each other.</b><p>Today, every alert watches one vehicle against a fixed zone on the map. But some of the most useful moments happen when two things that are both moving get close: a vehicle and a person, or two vehicles.</p><p>It fits:</p><ul><li>ride-hailing pickups: the passenger's phone buzzes when the driver is 100 m away,</li><li>rider handovers: logged the moment two riders are within 50 m,</li><li>cash-in-transit escorts: an unknown tracked vehicle stays close to a cash van for too long,</li><li>tow trucks: the stranded driver hears when help is 2 minutes away.</li></ul><p>It also completes the car-tracker example: that alert fires when your car and your phone drift apart, and this one fires when two things come together.</p></li>
           <li><b>One year of history instead of 90 days.</b><p>The 90 days was for testing and the demo. Many businesses need a full year for audits, insurance claims and seasonal trends. Each position takes so little space that keeping a year is affordable.</p></li>
         </ol>
       </section>
+
 
 <section class="endcard" data-reveal="" aria-labelledby="endTitle">
         <div>
